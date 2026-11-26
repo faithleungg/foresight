@@ -154,7 +154,7 @@ main {
 .way > * { position: relative; z-index: 1; }
 /* Hover: darken and slightly push in the photo (Agentation note) */
 .way::before { transition: filter .35s ease, transform .6s ease; }
-.way:hover::before, .way:focus-visible::before { filter: brightness(.7); transform: scale(1.02); }
+.way:hover::before, .way:focus-visible::before { filter: brightness(.7); transform: scale(1.008); } /* subtler push-in (Agentation note) */
 @media (prefers-reduced-motion: reduce) { .way::before { transition: filter .35s ease; } .way:hover::before, .way:focus-visible::before { transform: none; } }
 .way-top { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
 .way-title { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1.08; letter-spacing: -0.44px; }
