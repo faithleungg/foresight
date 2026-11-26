@@ -1,16 +1,24 @@
 <svg width="436" height="320" viewBox="0 0 436 320" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- Low-fi pillar chart: five rising pillars, the last one in mint. No real figures.
        Uneven steps, 24px gaps; bars are open at the bottom so they sit flush on the baseline (Agentation notes). -->
-  <defs><linearGradient id="mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#96DDDC" stop-opacity=".25"/><stop offset="1" stop-color="#96DDDC" stop-opacity=".03"/></linearGradient></defs>
+  <defs>
+    <!-- diagonal hatch inside the bars (Agentation note) -->
+    <pattern id="hatch" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="white" stroke-opacity=".28" stroke-width="1"/></pattern>
+    <pattern id="hatch-mint" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line x1="0" y1="0" x2="0" y2="7" stroke="#96DDDC" stroke-opacity=".55" stroke-width="1"/></pattern><linearGradient id="mint" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#96DDDC" stop-opacity=".25"/><stop offset="1" stop-color="#96DDDC" stop-opacity=".03"/></linearGradient></defs>
   <rect x="40" y="238" width="52" height="52" fill="white" fill-opacity=".03"/>
+  <rect x="40" y="238" width="52" height="52" fill="url(#hatch)"/>
   <path d="M40 290V238H92V290" stroke="white" stroke-opacity=".7" stroke-width="1.2" stroke-linejoin="miter"/>
   <rect x="116" y="196" width="52" height="94" fill="white" fill-opacity=".03"/>
+  <rect x="116" y="196" width="52" height="94" fill="url(#hatch)"/>
   <path d="M116 290V196H168V290" stroke="white" stroke-opacity=".7" stroke-width="1.2" stroke-linejoin="miter"/>
   <rect x="192" y="176" width="52" height="114" fill="white" fill-opacity=".03"/>
+  <rect x="192" y="176" width="52" height="114" fill="url(#hatch)"/>
   <path d="M192 290V176H244V290" stroke="white" stroke-opacity=".7" stroke-width="1.2" stroke-linejoin="miter"/>
   <rect x="268" y="112" width="52" height="178" fill="white" fill-opacity=".03"/>
+  <rect x="268" y="112" width="52" height="178" fill="url(#hatch)"/>
   <path d="M268 290V112H320V290" stroke="white" stroke-opacity=".7" stroke-width="1.2" stroke-linejoin="miter"/>
   <rect x="344" y="44" width="52" height="246" fill="url(#mint)"/>
+  <rect x="344" y="44" width="52" height="246" fill="url(#hatch-mint)"/>
   <path d="M344 290V44H396V290" stroke="#96DDDC" stroke-width="1.2" stroke-linejoin="miter"/>
   <path d="M16 290H420" stroke="white" stroke-opacity=".35"/>
 </svg>
