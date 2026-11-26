@@ -1029,7 +1029,7 @@ return { setup: setup, render: render, manifest: manifest };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
   var NS = 'http://www.w3.org/2000/svg';
-  var FWD = 7000, REST = 1000, BACK = 7000, TRAIN = 1, GAP = 0.035; // one bead per route, slower (Agentation note)
+  var FWD = 7000, REST = 1000, BACK = 7000, TRAIN = 2, GAP = 0.06; // two beads per route, the second trailing the first (Agentation notes)
   var CYCLE = FWD + REST + BACK + REST;
 
   // Polyline with rounded corners (radius r), as SVG path data.
