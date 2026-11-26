@@ -1151,7 +1151,7 @@ return { setup: setup, render: render, manifest: manifest };
 /* ---------- Company vision art: mint spotlight on the glyph pattern follows the cursor ---------- */
 (function () {
   var art = document.querySelector('.co-vision-art');
-  if (!art) return;
+  if (!art || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
   var tx = 0, ty = 0, x = 0, y = 0, r = 0, tr = 0, raf = 0, R = 170;
   function frame() {
     raf = 0;
