@@ -692,10 +692,176 @@ var manifest = {
 return { setup: setup, render: render, manifest: manifest };
 })();
 
+/* ---------- Figma shader module: "Foresight BG · Dappled" (paper ground for the Hybrid light bands, Figma 258:16154). Verbatim. ---------- */
+window.FS_SHADERS = window.FS_SHADERS || {};
+window.FS_SHADERS.paper = (function () {
+function setup(device, frame) {
+    var wgsl = `diagnostic(off,derivative_uniformity);
+struct U {
+  paper: vec4f,
+  ink: vec4f,
+  a: vec4f,
+  b: vec4f,
+  c: vec4f,
+};
+@group(0) @binding(0) var<uniform> u: U;
+
+struct VsIn {
+  @location(0) pos: vec2f,
+  @location(1) uv: vec2f,
+};
+struct VsOut {
+  @builtin(position) position: vec4f,
+  @location(0) uv: vec2f,
+};
+
+@vertex fn vs_main(in: VsIn) -> VsOut {
+  var o: VsOut;
+  o.position = vec4f(in.pos, 0.0, 1.0);
+  o.uv = in.uv;
+  return o;
+}
+
+fn hash(p0: vec2f) -> f32 {
+  var p = fract(p0 * vec2f(123.34, 456.21));
+  p = p + dot(p, p + 45.32);
+  return fract(p.x * p.y);
+}
+
+fn vnoise(p: vec2f) -> f32 {
+  let i = floor(p);
+  let f = fract(p);
+  let w = f * f * (3.0 - 2.0 * f);
+  return mix(mix(hash(i), hash(i + vec2f(1.0, 0.0)), w.x),
+             mix(hash(i + vec2f(0.0, 1.0)), hash(i + vec2f(1.0, 1.0)), w.x), w.y);
+}
+
+fn fbm(p0: vec2f) -> f32 {
+  var p = p0;
+  var v = 0.0;
+  var amp = 0.5;
+  for (var i = 0; i < 5; i = i + 1) {
+    v = v + amp * vnoise(p);
+    p = vec2f(1.6 * p.x - 1.2 * p.y, 1.2 * p.x + 1.6 * p.y);
+    amp = amp * 0.5;
+  }
+  return v;
+}
+
+@fragment fn fs_main(@location(0) uv: vec2f) -> @location(0) vec4f {
+  let res = u.a.xy / u.a.z;
+  let p = uv * res;
+  let t = u.a.w * u.b.z * 0.018;
+  let q0 = p / (900.0 * max(u.b.y, 0.05));
+  let q = vec2f(fbm(q0 * 1.1 + vec2f(0.0, t)), fbm(q0 * 1.1 + vec2f(5.2, 1.3) - t));
+  let n = fbm(q0 * 1.5 + q * 1.9 + vec2f(t * 0.6, -t * 0.4));
+  let shade = clamp(smoothstep(0.38, 0.70, n) * 0.85 * u.b.x, 0.0, 1.0);
+  var col = mix(u.paper.rgb, u.ink.rgb, shade);
+  let weave = step(0.5, fract(p.x * 0.5)) * step(0.5, fract(p.y * 0.5));
+  col = col - vec3f(weave * 0.012 * shade);
+  col = col + vec3f((hash(floor(p)) - 0.5) * 0.06 * u.b.w);
+  return vec4f(clamp(col, vec3f(0.0), vec3f(1.0)), 1.0);
+}
+`;
+    frame.state.module = device.createShaderModule({ code: wgsl });
+    frame.state.pipeline = null;
+    frame.state.pipelineFormat = null;
+    frame.state.quad = device.createBuffer({
+        size: 6 * 4 * 4,
+        usage: GPUBufferUsage.VERTEX,
+        mappedAtCreation: true,
+    });
+    new Float32Array(frame.state.quad.getMappedRange()).set([
+        -1, -1, 0, 1,
+        1, -1, 1, 1,
+        -1, 1, 0, 0,
+        -1, 1, 0, 0,
+        1, -1, 1, 1,
+        1, 1, 1, 0,
+    ]);
+    frame.state.quad.unmap();
+    frame.state.uniforms = device.createBuffer({
+        size: 80,
+        usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+    });
+}
+function render(device, frame) {
+    var params = frame.params || {};
+    function num(v, fallback) {
+        var n = Number(v);
+        return Number.isFinite(n) ? n : fallback;
+    }
+    function rgba(c, fallback) {
+        var src = c || {};
+        return [num(src.r, fallback[0]), num(src.g, fallback[1]), num(src.b, fallback[2]), num(src.a, 1)];
+    }
+    var seconds = (num(frame.time, 0) * 0.001) % 10000;
+    var data = new Float32Array(20);
+    data.set(rgba(params.paper, [0.996, 0.992, 0.98]), 0);
+    data.set(rgba(params.shadow, [0.87, 0.864, 0.852]), 4);
+    data.set([frame.output.width, frame.output.height, num(frame.renderScale, 1) || 1, seconds], 8);
+    data.set([num(params.intensity, 1), num(params.scale, 1), num(params.speed, 1), num(params.grain, 0.5)], 12);
+    data.set([0, 0, 0, 0], 16);
+    device.queue.writeBuffer(frame.state.uniforms, 0, data);
+    var outputFormat = frame.output.format;
+    if (frame.state.pipeline == null || frame.state.pipelineFormat !== outputFormat) {
+        frame.state.pipeline = device.createRenderPipeline({
+            layout: 'auto',
+            vertex: {
+                module: frame.state.module,
+                entryPoint: 'vs_main',
+                buffers: [{
+                        arrayStride: 16,
+                        attributes: [
+                            { shaderLocation: 0, format: 'float32x2', offset: 0 },
+                            { shaderLocation: 1, format: 'float32x2', offset: 8 },
+                        ],
+                    }],
+            },
+            fragment: {
+                module: frame.state.module,
+                entryPoint: 'fs_main',
+                targets: [{ format: outputFormat }],
+            },
+            primitive: { topology: 'triangle-list' },
+        });
+        frame.state.pipelineFormat = outputFormat;
+    }
+    var encoder = device.createCommandEncoder();
+    var pass = encoder.beginRenderPass({
+        colorAttachments: [{
+                view: frame.output.createView(),
+                loadOp: 'clear',
+                clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                storeOp: 'store',
+            }],
+    });
+    pass.setPipeline(frame.state.pipeline);
+    var bindGroup = device.createBindGroup({
+        layout: frame.state.pipeline.getBindGroupLayout(0),
+        entries: [{ binding: 0, resource: { buffer: frame.state.uniforms } }],
+    });
+    pass.setBindGroup(0, bindGroup);
+    pass.setVertexBuffer(0, frame.state.quad);
+    pass.draw(6);
+    pass.end();
+    device.queue.submit([encoder.finish()]);
+}
+var manifest = {
+  "isAnimated": true,
+  "name": "Foresight BG · Dappled",
+  "renderScaleAware": true,
+  "usesMouse": false,
+  "version": 3
+}
+return { setup: setup, render: render, manifest: manifest };
+})();
+
 /* ---------- Shader host: runs the Figma shader modules' setup/render on WebGPU ---------- */
 (function () {
   var PARAMS = {
     emi: { background: { r: 0, g: 0, b: 0, a: 1 }, zoom: 1, subjectX: 0, composition: 0, lightAngle: 160, vignette: 0.550000011920929, tone: 0.03999999910593033, grain: 1.600000023841858, accent: { r: 0.550000011920929, g: 0.949999988079071, b: 0.7200000286102295, a: 1 }, waveScale: 1, showAccent: false, cameraHeight: 1, ink: { r: 1, g: 1, b: 1, a: 1 }, lightHeight: 14, contrast: 1.2999999523162842, waveHeight: 1, seed: 7 },
+    paper: { grain: 0.5, scale: 1, intensity: 1, shadow: { r: 0.8700000047683716, g: 0.8640000224113464, b: 0.8519999980926514, a: 1 }, paper: { r: 0.9959999918937683, g: 0.9919999837875366, b: 0.9800000190734863, a: 1 }, speed: 1 },
     control: { background: { r: 0, g: 0, b: 0, a: 1 }, zoom: 1, subjectX: 0, composition: 0, lightAngle: 160, vignette: 0.550000011920929, tone: 0.03999999910593033, roundness: 0.6000000238418579, grain: 1.600000023841858, accent: { r: 0.550000011920929, g: 0.949999988079071, b: 0.7200000286102295, a: 1 }, waveScale: 1, showAccent: false, cameraHeight: 1, ink: { r: 1, g: 1, b: 1, a: 1 } /* white, to match the diagram panel (Agentation note; Figma had mint) */, lightHeight: 14, contrast: 1.2999999523162842, waveHeight: 1, seed: 7 }
   };
   function rgb(name, fallback) {
@@ -705,6 +871,7 @@ return { setup: setup, render: render, manifest: manifest };
   async function start() {
     if (!navigator.gpu) return;
     Object.keys(PARAMS).forEach(function (k) {
+      if (k === 'paper') return;
       PARAMS[k].background = rgb('--shader-bg', PARAMS[k].background);
       PARAMS[k].ink = rgb('--shader-ink', PARAMS[k].ink);
     });
@@ -716,12 +883,14 @@ return { setup: setup, render: render, manifest: manifest };
       var key = canvas.dataset.shader, mod = window.FS_SHADERS[key];
       var ctx = canvas.getContext('webgpu');
       ctx.configure({ device: device, format: format, alphaMode: 'premultiplied' });
-      var frame = { state: {}, params: PARAMS[key], renderScale: 1, output: null };
+      var frame = { state: {}, params: PARAMS[key], renderScale: 1, output: null, time: 0 };
       mod.setup(device, frame);
       var pending = false;
+      var animated = mod.manifest && mod.manifest.isAnimated;
+      var maxDpr = key === 'paper' ? 1 : 2; // the paper is a soft texture; 1x keeps the full-screen pass cheap
       function draw() {
         pending = false;
-        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
         var w = Math.max(1, Math.round(canvas.clientWidth * dpr));
         var h = Math.max(1, Math.round(canvas.clientHeight * dpr));
         if (canvas.width !== w || canvas.height !== h) { canvas.width = w; canvas.height = h; }
@@ -730,6 +899,14 @@ return { setup: setup, render: render, manifest: manifest };
         mod.render(device, frame);
       }
       new ResizeObserver(function () { if (!pending) { pending = true; requestAnimationFrame(draw); } }).observe(canvas);
+      // Animated modules (the paper) drift slowly: ~20fps is plenty, and nothing runs for reduced motion.
+      if (animated && !(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) {
+        var last = 0;
+        (function tick(t) {
+          if (t - last > 50) { last = t; frame.time = t; draw(); }
+          requestAnimationFrame(tick);
+        })(0);
+      }
     });
   }
   start().catch(function (e) { console.warn('Shader fill unavailable:', e); });
@@ -936,4 +1113,34 @@ return { setup: setup, render: render, manifest: manifest };
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
     new IntersectionObserver(function (es) { visible = es[0].isIntersecting; kick(); }).observe(inner);
   });
+})();
+
+
+/* ---------- Hybrid: rail ink follows the band underneath (light paper vs black) ---------- */
+(function () {
+  var bands = Array.prototype.slice.call(document.querySelectorAll('.tone-light, .tone-dark, .hero, .msi-hero, .cm-hero, .co-hero'));
+  if (!bands.length) return;
+  var rail = document.querySelector('.rail');
+  var parts = Array.prototype.slice.call(document.querySelectorAll('.wordmark, .index, .demo'));
+  function lightAt(y) {
+    for (var i = 0; i < bands.length; i++) {
+      var r = bands[i].getBoundingClientRect();
+      if (y >= r.top && y < r.bottom) return bands[i].classList.contains('tone-light') && !bands[i].closest('.tone-dark');
+    }
+    return false;
+  }
+  var ticking = false;
+  function update() {
+    ticking = false;
+    parts.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      el.classList.toggle('on-light', lightAt((r.top + r.bottom) / 2));
+    });
+    var w = document.querySelector('.wordmark');
+    if (w && rail) rail.classList.toggle('on-light', w.classList.contains('on-light'));
+  }
+  function req() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', req, { passive: true });
+  window.addEventListener('resize', req);
+  update();
 })();

@@ -13,6 +13,10 @@ Static marketing site for Foresight, the healthcare neolab building medical supe
 
 The designs come from the Figma file "Web Revamp" (section "Wednesday", node 244:14233). Each page is a labelled frame in that section.
 
+## Hybrid branch
+
+This branch tests light paper bands alternating with black bands (Figma 258:16154). The paper is the animated "Foresight BG · Dappled" shader on one fixed canvas behind each page. Sections opt in with `tone-light` or `tone-dark`. The rail switches between light and dark ink as it passes over each band. All of the theme's CSS sits in the "HYBRID" block at the end of `styles.css`.
+
 ## Structure
 
 ```

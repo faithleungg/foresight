@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<canvas class="paper-bg" data-shader="paper" aria-hidden="true"></canvas>
 <nav class="rail" aria-label="Site">
   <div class="rail-top">
     <a class="wordmark" href="index.html">Foresight</a>
@@ -38,7 +39,7 @@
     </div>
   </section>
 
-  <section class="cm-challenge" aria-labelledby="challenge-h">
+  <section class="cm-challenge tone-light" aria-labelledby="challenge-h">
     <div class="cm-challenge-text">
       <h2 class="h-section" id="challenge-h">The challenge isn’t treatment.<br>It’s continuity.</h2>
       <div class="cm-body">
@@ -50,7 +51,8 @@
     <div class="cm-challenge-photo"><img src="assets/cm/seniors.jpg" alt="Two older women smiling together" width="438" height="500"></div>
   </section>
 
-  <section class="cm-block" aria-labelledby="programs-h">
+  <section class="cm-block tone-dark" aria-labelledby="programs-h">
+    <canvas class="grain-fill" data-shader="control" aria-hidden="true"></canvas>
     <h2 class="h-section cm-block-h" id="programs-h">Three programs. One partner.</h2>
     <div class="cm-row cm-row--wide">
       <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/ccm.svg" alt=""></span><h3>Chronic Care Management</h3><p>For patients with two or more chronic conditions. Medicare reimburses your clinic for 20+ minutes of non-face-to-face care each month.</p></div>
@@ -59,26 +61,26 @@
     </div>
   </section>
 
-  <section class="cm-block cm-block--tight" aria-labelledby="run-h">
+  <section class="cm-block cm-block--tight tone-light" aria-labelledby="run-h">
     <h2 class="h-section" id="run-h">We run the program. You run the practice.</h2>
     <div class="cm-row">
-      <div class="cm-item cm-item--tile"><img src="assets/cm/tiles/enrollment.png" alt="" width="344" height="340" loading="lazy"><h3>Enrollment</h3><p>We bring your eligible patients into the program.</p></div>
-      <div class="cm-item cm-item--tile"><img src="assets/cm/tiles/monthly-care.png" alt="" width="344" height="340" loading="lazy"><h3>Monthly Care</h3><p>Every enrolled patient gets consistent, ongoing support.</p></div>
-      <div class="cm-item cm-item--tile"><img src="assets/cm/tiles/documentation.png" alt="" width="344" height="340" loading="lazy"><h3>Documentation</h3><p>Every interaction is recorded.</p></div>
+      <div class="cm-item cm-item--tile"><img src="assets/cm/tiles-dark/enrollment.png" alt="" width="344" height="340" loading="lazy"><h3>Enrollment</h3><p>We bring your eligible patients into the program.</p></div>
+      <div class="cm-item cm-item--tile"><img src="assets/cm/tiles-dark/monthly-care.png" alt="" width="344" height="340" loading="lazy"><h3>Monthly Care</h3><p>Every enrolled patient gets consistent, ongoing support.</p></div>
+      <div class="cm-item cm-item--tile"><img src="assets/cm/tiles-dark/documentation.png" alt="" width="344" height="340" loading="lazy"><h3>Documentation</h3><p>Every interaction is recorded.</p></div>
     </div>
   </section>
 
-  <section class="cm-block" aria-labelledby="why-h">
+  <section class="cm-block tone-light" aria-labelledby="why-h">
     <h2 class="h-section cm-block-h" id="why-h">Why partner with us</h2>
     <div class="cm-grid cm-grid--boxed">
-      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/staffing.svg" alt=""></span><h3>Turnkey staffing</h3><p>A team that runs your program end to end</p></div>
-      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/support.svg" alt=""></span><h3>24/7 Patient Support</h3><p>Continuous access to a 24/7 phone line</p></div>
-      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/fast.svg" alt=""></span><h3>Fast Implementation</h3><p>Live in as soon as 10 days.</p></div>
-      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/cost.svg" alt=""></span><h3>No up-front cost</h3><p>Start without paying anything first.</p></div>
+      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/staffing-light.svg" alt=""></span><h3>Turnkey staffing</h3><p>A team that runs your program end to end</p></div>
+      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/support-light.svg" alt=""></span><h3>24/7 Patient Support</h3><p>Continuous access to a 24/7 phone line</p></div>
+      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/fast-light.svg" alt=""></span><h3>Fast Implementation</h3><p>Live in as soon as 10 days.</p></div>
+      <div class="cm-item"><span class="cm-ico" aria-hidden="true"><img src="assets/cm/icons/cost-light.svg" alt=""></span><h3>No up-front cost</h3><p>Start without paying anything first.</p></div>
     </div>
   </section>
 
-  <section class="cm-block cm-cta" aria-labelledby="cta-h">
+  <section class="cm-block cm-cta tone-dark" aria-labelledby="cta-h">
     <div class="cm-cta-text">
       <h2 class="h-section" id="cta-h">Let’s explore what your clinic could earn.</h2>
       <p>Every clinic is different. Book a call with our team to discuss your practice, explore potential revenue, and get a tailored estimate.</p>
@@ -88,7 +90,7 @@
     <img class="cm-cta-chart" src="assets/graphics/estimate-chart.svg" alt="" aria-hidden="true" width="436" height="320" loading="lazy">
   </section>
 
-  <footer class="foot foot--photo" id="footer">
+  <footer class="foot foot--photo tone-dark" id="footer">
     <canvas data-shader="control" aria-hidden="true"></canvas>
     <div class="foot-row">
       <div class="foot-brand"><strong>Foresight</strong><span>The healthcare neolab</span></div>

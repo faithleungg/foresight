@@ -610,3 +610,65 @@ main {
 .emi-flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible; } /* above the wires (Agentation note) */
 .emi-bead { fill: var(--signal); filter: drop-shadow(0 0 3px rgba(var(--signal-rgb), .9)); transition: fill .4s ease; }
 .emi-flow.is-back .emi-bead { fill: #fff; filter: drop-shadow(0 0 3px rgba(255,255,255,.8)); }
+
+/* =====================================================================================
+   HYBRID (branch "Hybrid"): light paper bands alternating with black bands.
+   Reference: Figma 258:16154 (Care Management, hybrid). The paper is the animated
+   "Foresight BG · Dappled" shader on one fixed canvas behind the page; light bands are
+   transparent over it, dark bands paint black (and carry that black under the rail).
+   ===================================================================================== */
+body { background: #fefdfa; }
+.paper-bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+main { border-left: 0; }
+
+/* Dark band: black ground extended left under the rail; 1px rail line on its left edge */
+.tone-dark { background: #000; box-shadow: -1px 0 0 0 #7d7d7d, calc(-1 * var(--rail) - 1px) 0 0 0 #000; }
+/* Light band: transparent over the paper, dark ink, rail line in the section rule colour */
+.tone-light {
+  --ink: #212121; --ink-soft: rgba(0,0,0,.6); --ink-mute: rgba(0,0,0,.5); --ink-faint: rgba(0,0,0,.35); --ink-dim: rgba(0,0,0,.4);
+  --signal-ink: #3f7f7e; --ink-chrome: rgba(0,0,0,.55);
+  color: var(--ink); background: transparent; box-shadow: -1px 0 0 0 var(--rule);
+}
+/* Dark islands inside light bands (photo cards, black panels) get the dark tokens back */
+.tone-light .way, .tone-light .stage, .tone-light .emi-panel, .tone-light .msi-improve-aside, .tone-light .co-vision-art {
+  --ink: #fff; --ink-soft: rgba(255,255,255,.6); --ink-mute: rgba(255,255,255,.5); --ink-faint: rgba(255,255,255,.35); --ink-dim: rgba(255,255,255,.4);
+  --signal-ink: #96dddc; color: var(--ink);
+}
+
+/* Light band sitting on top of a dark band: Figma's three-line hatch at the rail corner */
+.tone-light:has(+ .tone-dark) { background: url("assets/graphics/corner.svg") left bottom / 57px 57px no-repeat; }
+
+/* Photo heroes run under the rail, as in the reference; the rail line is drawn over the photo */
+/* Home hero placeholder: same grey it showed over black */
+.hero { background: #131313; }
+.msi-hero, .cm-hero, .co-hero { margin-left: calc(-1 * var(--rail)); padding-left: calc(var(--rail) + var(--gutter)); background-color: #000; box-shadow: none; }
+.msi-hero::after, .cm-hero::after, .co-hero::after { content: ""; position: absolute; top: 0; bottom: 0; left: var(--rail); width: 1px; background: rgba(255,255,255,.5); pointer-events: none; z-index: 1; }
+
+/* Rail: flips to dark ink while it sits over a light band (main.js toggles .on-light) */
+.wordmark, .index-links a, .demo { transition: color .25s ease, opacity .2s ease; }
+.wordmark.on-light, .index.on-light .index-links a, .demo.on-light { color: #212121; }
+.index.on-light .index-links a:hover, .index.on-light .index-links a.is-current { color: #3f7f7e; }
+@media (max-width: 900px) {
+  .rail.on-light { --rail-wash: 254,253,250; }
+  .msi-hero::after, .cm-hero::after, .co-hero::after { display: none; }
+}
+
+/* ---- Light-band fixes for colours that were hard-coded white ---- */
+.tone-light .msi-tabs { border-bottom-color: rgba(0,0,0,.35); }
+.tone-light .msi-tab img { filter: invert(1); }
+.tone-light .msi-panel p { color: rgba(0,0,0,.7); }
+.tone-light .cm-item p { color: rgba(0,0,0,.6); }
+.tone-light .cm-ico:has(img[src$="support-light.svg"]) { background: rgba(93,164,163,.3); }
+.cm-ico img[src$="staffing-light.svg"], .cm-ico img[src$="fast-light.svg"], .cm-ico img[src$="cost-light.svg"] { width: 40px; height: 40px; }
+.cm-ico:has(img[src$="staffing-light.svg"]), .cm-ico:has(img[src$="fast-light.svg"]), .cm-ico:has(img[src$="cost-light.svg"]) { background: none; }
+.cm-ico img[src$="support-light.svg"] { width: 19.3px; height: 19.3px; }
+.tone-light .cm-item--tile img { background: #000; }
+.tone-light .acc-item.is-open .acc-panel p { opacity: .75; }
+
+/* "Never finished": text on paper, the loop graphic keeps a black cell (like Company's vision row) */
+.msi-improve .msi-improve-aside { background: #000; }
+
+/* Grain behind the dark 3-up rows (Care Management programs, MSI model training), as in the reference */
+.cm-block, .msi-training { position: relative; }
+.grain-fill { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; pointer-events: none; }
+.cm-block > :not(.grain-fill), .msi-training > :not(.grain-fill) { position: relative; }

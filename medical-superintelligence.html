@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+<canvas class="paper-bg" data-shader="paper" aria-hidden="true"></canvas>
 <nav class="rail" aria-label="Site">
   <div class="rail-top">
     <a class="wordmark" href="index.html">Foresight</a>
@@ -40,7 +41,7 @@
     </div>
   </section>
 
-  <section class="msi-evidence" aria-labelledby="evidence-h">
+  <section class="msi-evidence tone-light" aria-labelledby="evidence-h">
     <div class="msi-evidence-inner">
       <div class="msi-head">
         <p class="eyebrow">[ clinical evidence ]</p>
@@ -68,7 +69,8 @@
     </div>
   </section>
 
-  <section class="msi-training" aria-labelledby="training-h">
+  <section class="msi-training tone-dark" aria-labelledby="training-h">
+    <canvas class="grain-fill" data-shader="control" aria-hidden="true"></canvas>
     <div class="msi-head">
       <p class="eyebrow">[ model training ]</p>
       <h2 class="h-section" id="training-h">Models that reason the way medicine does.</h2>
@@ -80,7 +82,7 @@
     </div>
   </section>
 
-  <section class="msi-models" aria-label="Where Foresight models are deployed">
+  <section class="msi-models tone-dark" aria-label="Where Foresight models are deployed">
     <canvas data-shader="emi" aria-hidden="true"></canvas>
     <p class="msi-models-cap">Foresight is deploying, testing, and researching implementation of its models in the following areas.</p>
     <div class="emi"><div class="emi-inner">
@@ -208,7 +210,7 @@
       </div></div>
   </section>
 
-  <section class="msi-improve" aria-labelledby="improve-h">
+  <section class="msi-improve tone-light" aria-labelledby="improve-h">
     <div class="msi-improve-text">
       <p class="eyebrow">[ Continuously improving ]</p>
       <h2 class="h-section" id="improve-h">Never finished. Always measured.</h2>
@@ -270,7 +272,7 @@
     </div>
   </section>
 
-  <footer class="foot foot--photo" id="footer">
+  <footer class="foot foot--photo tone-dark" id="footer">
     <canvas data-shader="control" aria-hidden="true"></canvas>
     <div class="foot-row">
       <div class="foot-brand"><strong>Foresight</strong><span>The healthcare neolab</span></div>
