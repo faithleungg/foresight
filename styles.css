@@ -714,3 +714,9 @@ main { border-left: 0; }
 /* MSI evidence: the tab underline runs the full width of its column (Agentation note) */
 .msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 24px; } /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
 .msi-evidence-inner > .msi-tabs-wrap { padding-top: 32px; } /* 32px (Agentation note) */
+
+/* Estimate chart: as tall as the text column beside it (heading to button), width follows (Agentation note) */
+@media (min-width: 901px) {
+  .cm-cta { align-items: stretch; }
+  .cm-cta-chart { flex: none; align-self: stretch; height: auto; width: auto; max-width: 50%; aspect-ratio: 406 / 248; object-fit: contain; object-position: right bottom; }
+}
