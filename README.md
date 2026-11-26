@@ -17,6 +17,10 @@ The designs come from the Figma file "Web Revamp" (section "Wednesday", node 244
 
 This branch tests light paper bands alternating with black bands (Figma 258:16154). The paper is the animated "Foresight BG · Dappled" shader on one fixed canvas behind each page. Sections opt in with `tone-light` or `tone-dark`. The rail switches between light and dark ink as it passes over each band. All of the theme's CSS sits in the "HYBRID" block at the end of `styles.css`.
 
+## Light branch
+
+The `light` branch builds on Hybrid and puts the whole site on the paper: every section and footer is `tone-light`, and the `:root` tokens default to dark ink on paper. Only the photo heroes (Medical Superintelligence, Care Management, Company) and the home "Two ways" photo cards stay dark, with white ink. The models diagram has white cards, grey wires and teal/charcoal beads. The grain panels (diagram, control stage, footers) draw a white ground with grey grain, multiplied faintly over the paper. Dark-only graphics have light copies: `assets/icons/*-light.svg`, `assets/cm/icons/{ccm,pcm,rpm}-light.svg` and `assets/graphics/estimate-chart-light.svg`. The "We run the program" tiles use the original light `assets/cm/tiles/`, and the Company vision art shows dark glyphs with a teal cursor spotlight. The theme CSS sits in the "LIGHT" block at the end of `styles.css`.
+
 ## Structure
 
 ```

@@ -5,35 +5,38 @@
 /* Layout: fixed 280px index rail on the left; full-bleed hero, then a 1160px column of bordered bands.
    Prototype of Figma "direction 1 - 20" (213:34650). Single dark look, as designed. */
 :root {
-  --ground: #000000;       /* page + section ground (Agentation note: whole page black) */
-  --panel-line: #454545;   /* border on black panels, so they read against the black page */
-  --panel: #000000;        /* product cards, shader panels */
+  /* Light branch: light is the default. Photo heroes and the "Two ways" photo cards
+     get the white-ink tokens back (see .way / .msi-hero / .cm-hero / .co-hero below). */
+  --ground: #fefdfa;       /* paper (the animated paper shader draws over this) */
+  --panel-line: #d9d9d7;   /* border on panels, so they read against the paper */
+  --panel: transparent;    /* shader panels: the paper shows through */
   --rule: #454545;         /* section dividers */
-  --ink: #ffffff;
-  --ink-soft: rgba(255,255,255,.6);
-  --ink-mute: rgba(255,255,255,.5);
-  --ink-faint: rgba(255,255,255,.35);
+  --ink: #212121;
+  --ink-soft: rgba(0,0,0,.6);
+  --ink-mute: rgba(0,0,0,.5);
+  --ink-faint: rgba(0,0,0,.35);
   --mint: #96dddc;         /* Foresight status / signal */
+  --teal: #2f7f7d;         /* mint darkened for use on paper */
   --amber: #f2d45c;        /* "in testing" swatch */
   --pill-ink: #535353;
-  --tile: #141515;         /* emi diagram tiles */
-  --tile-line: #2c2d2d;
-  --wire: #575757;
-  --slab: #161616;         /* layer fill (Figma) */
-  --bone: #fdfcf9;         /* slab label */
+  --tile: #ffffff;         /* emi diagram tiles */
+  --tile-line: #e4e4e2;
+  --wire: #b5b5b5;
+  --slab: #fbfbfa;         /* layer fill */
+  --bone: #3a3a3a;         /* slab label */
   --signal-rgb: 150,221,220; /* mint used for lines, dots and status marks */
   --signal: rgb(var(--signal-rgb));
-  --signal-ink: #96dddc;   /* mint used as small text */
-  --line-art: #ffffff;     /* strokes of the dome / illustration SVGs */
-  --stem: #3b3d3d;         /* connector stems in the emi diagram */
-  --slab-line: #fdfcf9;    /* layer outlines */
-  --ink-dim: rgba(255,255,255,.4);
-  --ink-chrome: rgba(255,255,255,.55);
-  --tile-icon: #181919;
-  --loop-bg: rgba(0,0,0,.5);
-  --rail-wash: 10,10,10;   /* mobile top-bar fade */
-  --shader-bg: 0 0 0;      /* grain panels: ground and dot colour (0-255) */
-  --shader-ink: 255 255 255;
+  --signal-ink: #3f7f7e;   /* mint used as small text (darkened for paper) */
+  --line-art: #212121;     /* strokes of the dome / illustration SVGs */
+  --stem: #c8c8c6;         /* connector stems in the emi diagram */
+  --slab-line: #8f8f8d;    /* layer outlines */
+  --ink-dim: rgba(0,0,0,.4);
+  --ink-chrome: rgba(0,0,0,.55);
+  --tile-icon: #f4f4f2;
+  --loop-bg: rgba(255,255,255,.75);
+  --rail-wash: 254,253,250; /* mobile top-bar fade */
+  --shader-bg: 255 255 255; /* grain panels: ground and dot colour (0-255); white ground, grey grain */
+  --shader-ink: 158 158 153;
 
   --serif: 'Portrait', 'EB Garamond', Garamond, 'Times New Roman', serif;
   --sans: 'Geist', system-ui, -apple-system, 'Helvetica Neue', Arial, sans-serif;
@@ -42,7 +45,7 @@
 
   --rail: 280px;
   --gutter: 40px;
-  color-scheme: dark;
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: auto; }
@@ -82,6 +85,8 @@ svg { display: block; width: 100%; height: 100%; }
   pointer-events: none;
 }
 .rail > * { pointer-events: auto; }
+/* The rail keeps white ink by default (it sits over the photo heroes); main.js adds .on-light over paper */
+.rail { color: #fff; --signal-ink: #96dddc; --rail-wash: 10,10,10; }
 .rail-top { display: flex; flex-direction: column; gap: 40px; }
 .wordmark { font-family: var(--serif); font-size: 32px; line-height: 1; letter-spacing: -0.32px; transition: opacity .2s ease; }
 .wordmark:hover, .wordmark:focus-visible { opacity: .8; } /* Agentation note */
@@ -114,7 +119,7 @@ svg { display: block; width: 100%; height: 100%; }
 }
 .hero::after { /* the rail's edge line, carried up over the hero */
   content: ""; position: absolute; top: 0; bottom: 0; left: var(--rail); width: 1px;
-  background: rgba(255,255,255,.5);
+  background: var(--rule);
 }
 
 /* ---------- Main column ---------- */
@@ -169,7 +174,7 @@ main {
 .emi-head { display: flex; flex-direction: column; gap: 16px; }
 .emi-head p:last-child { font-size: 18px; }
 .emi-panel { position: relative; margin-top: 32px; border: 1px solid var(--panel-line); border-radius: 4px; overflow: hidden; background: var(--panel); padding: 60.44px; }
-.emi-panel > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
+.emi-panel > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; mix-blend-mode: multiply; } /* grey grain multiplied over the paper */
 .emi { position: relative; display: flex; flex-direction: column; overflow-x: auto; }
 /* Capped and centred so the cards don't stretch on wide panels (Agentation note). */
 .emi-inner { min-width: 680px; width: 100%; max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; }
@@ -202,7 +207,7 @@ main {
 .tilecard ul { list-style: none; padding: 0; margin: 25.97px 0 0; }
 .tilecard li { padding-top: 7.56px; font-size: 14.84px; color: var(--ink-soft); line-height: normal; }
 .status { display: flex; align-items: center; gap: 7.42px; margin-top: 37.78px; font-family: var(--mono); font-size: 11.13px; letter-spacing: .45px; color: var(--ink-soft); }
-.status i { width: 7.42px; height: 7.42px; background: var(--amber); }
+.status i { width: 7.42px; height: 7.42px; background: #d4a21a; } /* amber darkened for white cards */
 .status.r i { background: var(--signal); }
 .loop {
   display: flex; align-items: center; gap: 9.28px; padding: 8.35px 16.7px;
@@ -230,7 +235,7 @@ main {
 .acc-item { position: relative; border-top: 1px solid var(--rule); }
 .acc-item::before { /* progress through this step */
   content: ""; position: absolute; left: 0; top: -1px; height: 1px;
-  width: calc(var(--fill, 0) * 100%); background: var(--ink); /* white (Agentation note) */
+  width: calc(var(--fill, 0) * 100%); background: var(--ink);
 }
 .acc-head {
   all: unset; box-sizing: border-box; cursor: pointer;
@@ -245,7 +250,7 @@ main {
 .acc-num { transition: opacity .3s; }
 .acc-item:not(.is-open) .acc-num,
 .acc-item:not(.is-open) .acc-title { opacity: .5; }
-.acc-item:not(.is-open) .acc-num i { background: var(--ink); } /* grey: white at the 50% above */
+.acc-item:not(.is-open) .acc-num i { background: var(--ink); } /* grey: ink at the 50% above */
 .acc-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.2,.7,.1,1); margin-left: 64px; }
 .acc-panel > div { overflow: hidden; padding-bottom: 24px; }
 .acc-panel p { padding-top: 12px; font-size: 18px; line-height: 1.5; letter-spacing: -0.018px; opacity: 0; transition: opacity .4s ease .1s; }
@@ -356,7 +361,7 @@ main {
 
 /* Where the models are deployed: full-bleed grain + the Emi diagram (Figma 247:14487) */
 .msi-models { position: relative; overflow: hidden; border-top: 1px solid var(--rule); padding: 61px 60px 64px; display: flex; flex-direction: column; align-items: center; gap: 40px; }
-.msi-models > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; }
+.msi-models > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; mix-blend-mode: multiply; }
 .msi-models > :not(canvas) { position: relative; }
 .msi-models-cap { max-width: 451px; text-align: center; font-size: 16px; line-height: 1.5; }
 .msi-models .emi { width: 100%; }
@@ -373,7 +378,7 @@ main {
 .msi-evidence .msi-panel { min-height: 132px; } /* keeps the row height steady when switching tabs, so the title doesn't jump */
 .msi-head { display: flex; flex-direction: column; gap: 24px; } /* 24px (Agentation note) */
 .msi-tabs-wrap { display: flex; flex-direction: column; gap: 32px; }
-.msi-tabs { display: flex; gap: 0; height: 60px; border-bottom: .5px solid rgba(255,255,255,.6); }
+.msi-tabs { display: flex; gap: 0; height: 60px; border-bottom: .5px solid rgba(0,0,0,.35); }
 .msi-tabs .msi-tab { flex: 1 1 0; min-width: 0; justify-content: center; font-size: 18px; } /* equal-width tabs, 18px (Agentation notes) */
 .msi-tab {
   all: unset; box-sizing: border-box; cursor: pointer;
@@ -386,7 +391,7 @@ main {
 .msi-tab:focus-visible { outline: 1px solid var(--signal); outline-offset: 2px; }
 .msi-tab img { height: 20px; width: auto; display: block; }
 .msi-panel h3 { margin: 0 0 12px; font-weight: 400; font-size: 20px; line-height: 1.5; }
-.msi-panel p { max-width: 463px; font-size: 18px; line-height: 1.5; color: rgba(255,255,255,.7); }
+.msi-panel p { max-width: 463px; font-size: 18px; line-height: 1.5; color: rgba(0,0,0,.7); }
 
 /* Model training */
 .msi-training { border-top: 1px solid var(--rule); padding: 64px var(--gutter); display: flex; flex-direction: column; gap: 96px; } /* 96px (Agentation note) */
@@ -406,10 +411,10 @@ main {
 
 /* Footer over a photo (this page) */
 .foot--photo { position: relative; overflow: hidden; min-height: 374px; justify-content: space-between; border-top: 1px solid var(--rule); }
-/* Black grain shader instead of the photo, at 60% (Figma 244:14233) */
-.foot--photo > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; pointer-events: none; }
+/* Grain shader (white ground, grey grain) multiplied faintly over the paper */
+.foot--photo > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .35; mix-blend-mode: multiply; pointer-events: none; }
 .foot--photo > :not(canvas) { position: relative; z-index: 1; }
-.foot--photo .foot-nav h4 { color: rgba(255,255,255,.8); }
+.foot--photo .foot-nav h4 { color: rgba(0,0,0,.6); }
 .foot--photo .foot-brand span { font-size: 16px; line-height: 1.5; text-transform: none; }
 /* All Geist footer text at 18px on every page (Agentation note); mono labels and the wordmark unchanged */
 .foot .foot-brand span, .foot .foot-nav ul, .foot .chrome { font-size: 18px; line-height: 1.5; }
@@ -495,7 +500,7 @@ main {
 .cm-title { font-family: var(--serif); font-weight: 400; font-size: 80px; line-height: 1; letter-spacing: -0.8px; }
 .cm-lede { max-width: 917px; font-size: 24px; line-height: 1.5; letter-spacing: -0.6px; }
 .cm-lede strong { font-weight: 500; }
-.cm-call { position: relative; display: inline-grid; place-items: center; width: 240px; height: 37px; font-size: 18px; line-height: 1.45; color: #f4f4f2; transition: opacity .2s ease; }
+.cm-call { position: relative; display: inline-grid; place-items: center; width: 240px; height: 37px; font-size: 18px; line-height: 1.45; color: var(--ink); transition: opacity .2s ease; }
 .cm-call .bracket { position: absolute; inset: 0; }
 .cm-call:hover { opacity: .6; }
 
@@ -516,19 +521,19 @@ main {
 .cm-row { display: flex; gap: 24px; }
 .cm-row > * { flex: 1 1 0; min-width: 0; }
 .cm-row--wide { gap: 32px; } /* Agentation note */
-.cm-row--wide .cm-item p { color: rgba(255,255,255,.7); } /* 70% (Agentation note) */
+.cm-row--wide .cm-item p { color: rgba(0,0,0,.7); } /* 70% (Agentation note) */
 .cm-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .cm-item { display: flex; flex-direction: column; gap: 24px; }
 /* Mint icon tile (Figma 40px, 20% mint) */
-.cm-ico { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 4px; background: rgba(150,221,220,.2); }
+.cm-ico { width: 40px; height: 40px; flex: none; display: grid; place-items: center; border-radius: 4px; background: rgba(93,164,163,.3); }
 .cm-ico img { display: block; width: 24px; height: 24px; object-fit: contain; }
-.cm-ico img[src$="ccm.svg"] { width: 19.5px; height: 21.2px; }
-.cm-ico img[src$="pcm.svg"] { width: 20.5px; height: 20.4px; }
+.cm-ico img[src$="ccm-light.svg"] { width: 19.5px; height: 21.2px; }
+.cm-ico img[src$="pcm-light.svg"] { width: 20.5px; height: 20.4px; }
 .cm-ico img[src$="support.svg"] { width: 19.3px; height: 19.3px; }
 .cm-ico:has(img[src$="staffing.svg"]), .cm-ico:has(img[src$="fast.svg"]), .cm-ico:has(img[src$="cost.svg"]) { background: none; } /* these SVGs carry their own tile */
 .cm-ico img[src$="staffing.svg"], .cm-ico img[src$="fast.svg"], .cm-ico img[src$="cost.svg"] { width: 40px; height: 40px; }
 .cm-item h3 { margin: 0 0 -12px; font-weight: 400; font-size: 22px; line-height: 1.5; }
-.cm-item p { font-size: 18px; line-height: 1.5; color: rgba(255,255,255,.8); }
+.cm-item p { font-size: 18px; line-height: 1.5; color: rgba(0,0,0,.6); }
 .cm-item--tile { gap: 24px; }
 .cm-item--tile img { display: block; width: 100%; height: auto; aspect-ratio: 344 / 340; object-fit: cover; border-radius: 4px; background: #efefef; }
 .cm-item--tile h3 { margin-bottom: -16px; }
@@ -585,7 +590,7 @@ main {
 .co-vision-head .eyebrow { font-size: 16px; letter-spacing: .64px; color: var(--ink-soft); text-transform: uppercase; }
 .co-vision-body { font-size: 18px; line-height: 1.5; }
 /* Mirrored in the file to match Figma's flipped frame; cropped to its left/bottom like the frame */
-.co-vision-art { flex: 1 1 0; min-width: 0; min-height: 320px; background: #000 url("assets/company/vision.png") left bottom / 150% auto no-repeat; }
+.co-vision-art { flex: 1 1 0; min-width: 0; min-height: 320px; }
 
 @media (max-width: 1100px) {
   .co-cell--side { width: 46%; }
@@ -598,53 +603,48 @@ main {
   .co-letter .co-cell--side { padding-bottom: 0; }
   .co-row .h-section { font-size: 34px; }
   .co-vision-text { gap: 32px; }
-  .co-vision-art { flex: none; min-height: 0; aspect-ratio: 4 / 3; background-size: cover; background-position: center bottom; }
+  .co-vision-art { flex: none; min-height: 0; aspect-ratio: 4 / 3; }
 }
 .co-sign a { align-self: flex-start; color: inherit; text-decoration: none; transition: color .2s ease; }
-.co-sign a:hover, .co-sign a:focus-visible { color: var(--mint); }
+.co-sign a:hover, .co-sign a:focus-visible { color: var(--signal-ink); }
 
 /* Emi diagram bead flow (main.js). Beads ride above the wires; Foresight-1, the cards and the outcomes pill sit above the beads. */
-.emi-inner { position: relative; isolation: isolate; --wire: #7d7d7d; } /* lighter wires (Agentation note) */
+.emi-inner { position: relative; isolation: isolate; --wire: #a8a8a6; } /* grey wires on paper */
 .emi-inner [fill="#3B3D3D"] { fill: var(--wire); }
 .emi-inner .orch-frame, .emi-inner .tilecard, .emi-inner .loop { position: relative; z-index: 3; } /* boxes still cover the beads */
 .emi-flow { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; overflow: visible; } /* above the wires (Agentation note) */
-.emi-bead { fill: var(--signal); filter: drop-shadow(0 0 3px rgba(var(--signal-rgb), .9)); transition: fill .4s ease; }
-.emi-flow.is-back .emi-bead { fill: #fff; filter: drop-shadow(0 0 3px rgba(255,255,255,.8)); }
+.emi-bead { fill: var(--signal); filter: drop-shadow(0 0 2px rgba(var(--signal-rgb), .35)); transition: fill .4s ease; }
+.emi-flow.is-back .emi-bead { fill: #3a3a3a; filter: drop-shadow(0 0 2px rgba(0,0,0,.2)); } /* teal out, charcoal back */
 
 /* =====================================================================================
-   HYBRID (branch "Hybrid"): light paper bands alternating with black bands.
-   Reference: Figma 258:16154 (Care Management, hybrid). The paper is the animated
-   "Foresight BG · Dappled" shader on one fixed canvas behind the page; light bands are
-   transparent over it, dark bands paint black (and carry that black under the rail).
+   LIGHT (branch "light"): the whole site sits on the paper. The paper is the animated
+   "Foresight BG · Dappled" shader on one fixed canvas behind the page; every section is
+   tone-light (transparent over it, dark ink). Only the photo heroes and the "Two ways"
+   photo cards stay dark, with white ink.
    ===================================================================================== */
 body { background: #fefdfa; }
 .paper-bg { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 main { border-left: 0; }
 
-/* Dark band: black ground extended left under the rail; 1px rail line on its left edge */
-.tone-dark { background: #000; box-shadow: -1px 0 0 0 #7d7d7d, calc(-1 * var(--rail) - 1px) 0 0 0 #000; }
 /* Light band: transparent over the paper, dark ink, rail line in the section rule colour */
 .tone-light {
   --ink: #212121; --ink-soft: rgba(0,0,0,.6); --ink-mute: rgba(0,0,0,.5); --ink-faint: rgba(0,0,0,.35); --ink-dim: rgba(0,0,0,.4);
   --signal-ink: #3f7f7e; --ink-chrome: rgba(0,0,0,.55);
   color: var(--ink); background: transparent; box-shadow: -1px 0 0 0 var(--rule);
 }
-/* Dark islands inside light bands (photo cards, black panels) get the dark tokens back */
-.tone-light .way, .tone-light .emi-panel, .tone-light .co-vision-art {
+/* Photo islands (heroes, "Two ways" cards) keep white ink */
+.way, .msi-hero, .cm-hero, .co-hero {
   --ink: #fff; --ink-soft: rgba(255,255,255,.6); --ink-mute: rgba(255,255,255,.5); --ink-faint: rgba(255,255,255,.35); --ink-dim: rgba(255,255,255,.4);
   --signal-ink: #96dddc; color: var(--ink);
 }
 
-/* Light band sitting on top of a dark band: Figma's three-line hatch at the rail corner */
-.tone-light:has(+ .tone-dark) { background: url("assets/graphics/corner.svg") left bottom / 57px 57px no-repeat; }
-
+/* Home hero placeholder: a slightly darker paper tint until its content is designed */
+.hero { background: rgba(60,50,30,.06); }
 /* Photo heroes run under the rail, as in the reference; the rail line is drawn over the photo */
-/* Home hero placeholder: same grey it showed over black */
-.hero { background: #131313; }
 .msi-hero, .cm-hero, .co-hero { margin-left: calc(-1 * var(--rail)); padding-left: calc(var(--rail) + var(--gutter)); background-color: #000; box-shadow: none; }
 .msi-hero::after, .cm-hero::after, .co-hero::after { content: ""; position: absolute; top: 0; bottom: 0; left: var(--rail); width: 1px; background: rgba(255,255,255,.5); pointer-events: none; z-index: 1; }
 
-/* Rail: flips to dark ink while it sits over a light band (main.js toggles .on-light) */
+/* Rail: dark ink while it sits over paper (main.js toggles .on-light); white over the photo heroes */
 .wordmark, .index-links a, .demo { transition: color .25s ease, opacity .2s ease; }
 .wordmark.on-light, .index-links a.on-light, .demo.on-light { color: #212121; }
 .index-links a.on-light:hover, .index-links a.on-light.is-current { color: #3f7f7e; }
@@ -652,6 +652,10 @@ main { border-left: 0; }
   .rail.on-light { --rail-wash: 254,253,250; }
   .msi-hero::after, .cm-hero::after, .co-hero::after { display: none; }
 }
+
+/* Models diagram on paper: white cards with pale borders, grey wires, teal signal */
+.emi { --signal-rgb: 47,127,125; --signal: rgb(var(--signal-rgb)); --signal-ink: #2f7f7d; }
+.orch, .tilecard { box-shadow: 0 1px 2px rgba(0,0,0,.04); }
 
 /* ---- Light-band fixes for colours that were hard-coded white ---- */
 .tone-light .msi-tabs { border-bottom-color: rgba(0,0,0,.35); }
@@ -662,14 +666,9 @@ main { border-left: 0; }
 .cm-ico img[src$="staffing-light.svg"], .cm-ico img[src$="fast-light.svg"], .cm-ico img[src$="cost-light.svg"] { width: 40px; height: 40px; }
 .cm-ico:has(img[src$="staffing-light.svg"]), .cm-ico:has(img[src$="fast-light.svg"]), .cm-ico:has(img[src$="cost-light.svg"]) { background: none; }
 .cm-ico img[src$="support-light.svg"] { width: 19.3px; height: 19.3px; }
-.tone-light .cm-item--tile img { background: #000; }
 .tone-light .acc-item.is-open .acc-panel p { opacity: .75; }
 
 
-/* Grain behind the dark 3-up rows (Care Management programs, MSI model training), as in the reference */
-.cm-block, .msi-training { position: relative; }
-.grain-fill { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; pointer-events: none; }
-.cm-block > :not(.grain-fill), .msi-training > :not(.grain-fill) { position: relative; }
 /* The challenge photo's 20% shade was drawn over the whole cell; on paper that shows as a grey box
    when the image is narrower than the cell. Shade the image itself instead. */
 .tone-light .cm-challenge-photo::after { display: none; }
@@ -708,11 +707,8 @@ main { border-left: 0; }
 .tone-light .lp-lane:not(.lp-lane--learn) { stroke-dasharray: 92 104 200; }
 .tone-light .lp-lane--learn { stroke-dasharray: 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 109 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4; }
 
-/* "You stay in control" stage in light mode: white panel, grey grain (control-light shader), pale slabs (Agentation note) */
-.tone-light .stage { --panel: #fff; --panel-line: #d9d9d7; --slab: #fbfbfa; --slab-line: #8f8f8d; --bone: #3a3a3a; }
-/* No white panel: the paper shows through; the grain is multiplied on top, faintly (Agentation note) */
-.tone-light .stage { --panel: transparent; }
-.tone-light .stage > canvas { mix-blend-mode: multiply; opacity: .45; }
+/* "You stay in control" stage: no panel, the paper shows through; grey grain multiplied on top, faintly (Agentation note) */
+.stage > canvas { mix-blend-mode: multiply; opacity: .45; }
 
 /* MSI evidence: the tab underline runs the full width of its column (Agentation note) */
 .msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 24px; } /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
@@ -724,16 +720,29 @@ main { border-left: 0; }
   .cm-cta-chart { flex: none; align-self: stretch; height: auto; width: auto; max-width: 50%; aspect-ratio: 406 / 248; object-fit: contain; object-position: right bottom; }
 }
 
-/* Company vision art: glyphs light up mint around the cursor (Agentation note). A mint layer
-   masked by the pattern itself and by a soft circle that follows the pointer (main.js). */
+/* Company vision art on paper: dark glyphs (the white-on-transparent PNG used as a mask over ink),
+   lighting up teal around the cursor (Agentation note). The teal layer is masked by the pattern
+   itself and by a soft circle that follows the pointer (main.js). */
 .co-vision-art { position: relative; overflow: hidden; --mx: 50%; --my: 50%; --r: 0px; }
+.co-vision-art::after, .co-vision-art::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+}
+.co-vision-art::after {
+  background: #212121; opacity: .5;
+  -webkit-mask-image: url("assets/company/vision.png"); mask-image: url("assets/company/vision.png");
+  -webkit-mask-size: 150% auto; mask-size: 150% auto; -webkit-mask-position: left bottom; mask-position: left bottom;
+}
 .co-vision-art::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none; background: #96dddc;
+  z-index: 1; background: var(--teal);
   -webkit-mask-image: url("assets/company/vision.png"), radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,.6) 45%, transparent 100%);
-  -webkit-mask-size: 150% auto, 100% 100%; -webkit-mask-position: left bottom, 0 0; -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 150% auto, 100% 100%; -webkit-mask-position: left bottom, 0 0;
   -webkit-mask-composite: source-in;
   mask-image: url("assets/company/vision.png"), radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,.6) 45%, transparent 100%);
-  mask-size: 150% auto, 100% 100%; mask-position: left bottom, 0 0; mask-repeat: no-repeat;
+  mask-size: 150% auto, 100% 100%; mask-position: left bottom, 0 0;
   mask-composite: intersect;
 }
-@media (max-width: 900px) { .co-vision-art::before { -webkit-mask-size: cover, 100% 100%; mask-size: cover, 100% 100%; -webkit-mask-position: center bottom, 0 0; mask-position: center bottom, 0 0; } }
+@media (max-width: 900px) {
+  .co-vision-art::after { -webkit-mask-size: cover; mask-size: cover; -webkit-mask-position: center bottom; mask-position: center bottom; }
+  .co-vision-art::before { -webkit-mask-size: cover, 100% 100%; mask-size: cover, 100% 100%; -webkit-mask-position: center bottom, 0 0; mask-position: center bottom, 0 0; }
+}
