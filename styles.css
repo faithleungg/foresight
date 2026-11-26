@@ -684,7 +684,8 @@ main { border-left: 0; }
 .tone-light .lp-line--learn { stroke: rgba(47,127,125,.45); }
 .tone-light .lp-lane { stroke: #b5b5b5; } /* same grey as the loop lines (Agentation note) */
 .tone-light .lp-lane--learn { stroke: rgba(47,127,125,.3); }
-.tone-light .lp-head { stroke: #b5b5b5; }
+.tone-light .lp-head { stroke: #b5b5b5; fill: #b5b5b5; stroke-linejoin: round; } /* filled triangles (Agentation note) */
+.tone-light .lp-head--learn { stroke: var(--teal); fill: var(--teal); }
 .tone-light .lp-node { stroke: #8a8a8a; }
 .tone-light .lp-gate { stroke: #212121; }
 .tone-light .lp-bead { fill: #d4a21a; } /* slightly lighter yellow (Agentation note) */
