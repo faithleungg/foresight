@@ -704,4 +704,5 @@ main { border-left: 0; }
 .tone-light .stage { --panel: #fff; --panel-line: #d9d9d7; --slab: #fbfbfa; --slab-line: #8f8f8d; --bone: #3a3a3a; }
 
 /* MSI evidence: the tab underline runs the full width of its column (Agentation note) */
-.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); }
+.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 24px; } /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
+.msi-evidence-inner > .msi-tabs-wrap { padding-top: 32px; } /* 32px (Agentation note) */
