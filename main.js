@@ -738,6 +738,7 @@ return { setup: setup, render: render, manifest: manifest };
 /* ---------- Rail: mark the pieces that currently sit over the hero photo ---------- */
 (function () {
   var hero = document.getElementById('top');
+  if (!hero) return;
   var rail = document.querySelector('.rail');
   var parts = Array.prototype.slice.call(document.querySelectorAll('.wordmark, .index, .demo'));
   function update() {
@@ -757,6 +758,7 @@ return { setup: setup, render: render, manifest: manifest };
 /* ---------- You stay in control: scroll-linked accordion + stacking layers ---------- */
 (function () {
   var track = document.getElementById('control-track');
+  if (!track) return;
   var items = Array.prototype.slice.call(document.querySelectorAll('.acc-item'));
   var slabs = Array.prototype.slice.call(document.querySelectorAll('.slab'));
   var stack = document.getElementById('stack');
@@ -837,4 +839,101 @@ return { setup: setup, render: render, manifest: manifest };
 
   fitStack();
   render();
+})();
+
+/* ---------- Emi diagram: beads flow Foresight-1 -> each card -> outcomes (mint),
+   rest 1s, then feed back outcomes -> Foresight-1 (white). Agentation note. ---------- */
+(function () {
+  var inners = document.querySelectorAll('.emi-inner');
+  if (!inners.length) return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  var FWD = 7000, REST = 1000, BACK = 7000, TRAIN = 1, GAP = 0.035; // one bead per route, slower (Agentation note)
+  var CYCLE = FWD + REST + BACK + REST;
+
+  // Polyline with rounded corners (radius r), as SVG path data.
+  function rounded(pts, r) {
+    var p = pts.filter(function (q, i) { return i === 0 || Math.abs(q[0] - pts[i - 1][0]) > .5 || Math.abs(q[1] - pts[i - 1][1]) > .5; });
+    var d = 'M' + p[0][0] + ' ' + p[0][1];
+    for (var i = 1; i < p.length - 1; i++) {
+      var a = p[i - 1], b = p[i], c = p[i + 1];
+      var l1 = Math.hypot(b[0] - a[0], b[1] - a[1]), l2 = Math.hypot(c[0] - b[0], c[1] - b[1]);
+      var rr = Math.min(r, l1 / 2, l2 / 2);
+      var s = [b[0] - (b[0] - a[0]) / l1 * rr, b[1] - (b[1] - a[1]) / l1 * rr];
+      var e = [b[0] + (c[0] - b[0]) / l2 * rr, b[1] + (c[1] - b[1]) / l2 * rr];
+      d += ' L' + s[0] + ' ' + s[1] + ' Q' + b[0] + ' ' + b[1] + ' ' + e[0] + ' ' + e[1];
+    }
+    var z = p[p.length - 1];
+    return d + ' L' + z[0] + ' ' + z[1];
+  }
+
+  inners.forEach(function (inner) {
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'emi-flow');
+    svg.setAttribute('aria-hidden', 'true');
+    inner.insertBefore(svg, inner.firstChild);
+    var paths = [], beads = [];
+
+    function build() {
+      var box = inner.getBoundingClientRect();
+      if (!box.width) return;
+      svg.setAttribute('viewBox', '0 0 ' + box.width + ' ' + box.height);
+      svg.innerHTML = '';
+      paths = []; beads = [];
+      function R(el) { var r = el.getBoundingClientRect(); return { l: r.left - box.left, t: r.top - box.top, r: r.right - box.left, b: r.bottom - box.top, cx: (r.left + r.right) / 2 - box.left, cy: (r.top + r.bottom) / 2 - box.top }; }
+      var orch = R(inner.querySelector('.orch-frame'));
+      var rows = inner.querySelectorAll('.row3');
+      var busOut = R(rows[0].querySelector('.bus')).cy;
+      var cells = rows[0].querySelectorAll('.cell');
+      var cards = rows[1].querySelectorAll('.tilecard');
+      var busBack = R(rows[2].querySelector('.bus')).cy;
+      var loop = R(inner.querySelector('.loop'));
+      var x0 = orch.cx;
+      for (var i = 0; i < cells.length; i++) {
+        var xi = R(cells[i]).cx, card = R(cards[i]);
+        var pts = [[x0, orch.b], [x0, busOut], [xi, busOut], [xi, card.t], [xi, card.b], [xi, busBack], [x0, busBack], [x0, loop.t]];
+        var path = document.createElementNS(NS, 'path');
+        path.setAttribute('d', rounded(pts, 14.84));
+        path.setAttribute('fill', 'none');
+        svg.appendChild(path);
+        var len = path.getTotalLength();
+        paths.push({ el: path, len: len });
+        for (var k = 0; k < TRAIN; k++) {
+          var c = document.createElementNS(NS, 'circle');
+          c.setAttribute('r', k === 0 ? 2.6 : 2.1);
+          c.setAttribute('class', 'emi-bead');
+          svg.appendChild(c);
+          beads.push({ c: c, p: i, k: k });
+        }
+      }
+    }
+
+    var visible = false, start = performance.now(), raf = 0;
+    function frame(now) {
+      raf = 0;
+      if (!visible || !paths.length) return;
+      var t = (now - start) % CYCLE, prog = null, back = false;
+      if (t < FWD) prog = t / FWD;
+      else if (t >= FWD + REST && t < FWD + REST + BACK) { prog = (t - FWD - REST) / BACK; back = true; }
+      svg.classList.toggle('is-back', back);
+      beads.forEach(function (bd) {
+        if (prog === null) { bd.c.style.opacity = 0; return; }
+        var u = prog * (1 + GAP * (TRAIN - 1)) - bd.k * GAP;         // trailing beads start a little later
+        if (u < 0 || u > 1) { bd.c.style.opacity = 0; return; }
+        var e = u < .5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;  // ease in-out
+        var P = paths[bd.p], at = (back ? 1 - e : e) * P.len;
+        var pt = P.el.getPointAtLength(at);
+        bd.c.setAttribute('cx', pt.x); bd.c.setAttribute('cy', pt.y);
+        bd.c.style.opacity = (1 - bd.k * .3) * Math.min(1, u * 12, (1 - u) * 12);
+      });
+      raf = requestAnimationFrame(frame);
+    }
+    function kick() { if (visible && !raf) raf = requestAnimationFrame(frame); }
+
+    build();
+    if ('ResizeObserver' in window) new ResizeObserver(build).observe(inner);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; kick(); }).observe(inner);
+  });
 })();
