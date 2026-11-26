@@ -672,3 +672,7 @@ main { border-left: 0; }
 .cm-block, .msi-training { position: relative; }
 .grain-fill { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .6; pointer-events: none; }
 .cm-block > :not(.grain-fill), .msi-training > :not(.grain-fill) { position: relative; }
+/* The challenge photo's 20% shade was drawn over the whole cell; on paper that shows as a grey box
+   when the image is narrower than the cell. Shade the image itself instead. */
+.tone-light .cm-challenge-photo::after { display: none; }
+.tone-light .cm-challenge-photo img { filter: brightness(.8); }
