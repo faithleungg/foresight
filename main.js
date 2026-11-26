@@ -1147,3 +1147,26 @@ return { setup: setup, render: render, manifest: manifest };
   window.addEventListener('resize', req);
   update();
 })();
+
+/* ---------- Company vision art: mint spotlight on the glyph pattern follows the cursor ---------- */
+(function () {
+  var art = document.querySelector('.co-vision-art');
+  if (!art) return;
+  var tx = 0, ty = 0, x = 0, y = 0, r = 0, tr = 0, raf = 0, R = 170;
+  function frame() {
+    raf = 0;
+    x += (tx - x) * 0.18; y += (ty - y) * 0.18; r += (tr - r) * 0.12;
+    art.style.setProperty('--mx', x.toFixed(1) + 'px');
+    art.style.setProperty('--my', y.toFixed(1) + 'px');
+    art.style.setProperty('--r', r.toFixed(1) + 'px');
+    if (Math.abs(tx - x) > 0.3 || Math.abs(ty - y) > 0.3 || Math.abs(tr - r) > 0.3) raf = requestAnimationFrame(frame);
+  }
+  function kick() { if (!raf) raf = requestAnimationFrame(frame); }
+  art.addEventListener('pointerenter', function (e) {
+    var b = art.getBoundingClientRect(); tx = x = e.clientX - b.left; ty = y = e.clientY - b.top; tr = R; kick();
+  });
+  art.addEventListener('pointermove', function (e) {
+    var b = art.getBoundingClientRect(); tx = e.clientX - b.left; ty = e.clientY - b.top; kick();
+  });
+  art.addEventListener('pointerleave', function () { tr = 0; kick(); });
+})();

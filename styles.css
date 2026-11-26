@@ -720,3 +720,17 @@ main { border-left: 0; }
   .cm-cta { align-items: stretch; }
   .cm-cta-chart { flex: none; align-self: stretch; height: auto; width: auto; max-width: 50%; aspect-ratio: 406 / 248; object-fit: contain; object-position: right bottom; }
 }
+
+/* Company vision art: glyphs light up mint around the cursor (Agentation note). A mint layer
+   masked by the pattern itself and by a soft circle that follows the pointer (main.js). */
+.co-vision-art { position: relative; overflow: hidden; --mx: 50%; --my: 50%; --r: 0px; }
+.co-vision-art::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; background: #96dddc;
+  -webkit-mask-image: url("assets/company/vision.png"), radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,.6) 45%, transparent 100%);
+  -webkit-mask-size: 150% auto, 100% 100%; -webkit-mask-position: left bottom, 0 0; -webkit-mask-repeat: no-repeat;
+  -webkit-mask-composite: source-in;
+  mask-image: url("assets/company/vision.png"), radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,.6) 45%, transparent 100%);
+  mask-size: 150% auto, 100% 100%; mask-position: left bottom, 0 0; mask-repeat: no-repeat;
+  mask-composite: intersect;
+}
+@media (max-width: 900px) { .co-vision-art::before { -webkit-mask-size: cover, 100% 100%; mask-size: cover, 100% 100%; -webkit-mask-position: center bottom, 0 0; mask-position: center bottom, 0 0; } }
