@@ -646,8 +646,8 @@ main { border-left: 0; }
 
 /* Rail: flips to dark ink while it sits over a light band (main.js toggles .on-light) */
 .wordmark, .index-links a, .demo { transition: color .25s ease, opacity .2s ease; }
-.wordmark.on-light, .index.on-light .index-links a, .demo.on-light { color: #212121; }
-.index.on-light .index-links a:hover, .index.on-light .index-links a.is-current { color: #3f7f7e; }
+.wordmark.on-light, .index-links a.on-light, .demo.on-light { color: #212121; }
+.index-links a.on-light:hover, .index-links a.on-light.is-current { color: #3f7f7e; }
 @media (max-width: 900px) {
   .rail.on-light { --rail-wash: 254,253,250; }
   .msi-hero::after, .cm-hero::after, .co-hero::after { display: none; }

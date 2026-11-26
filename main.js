@@ -1124,7 +1124,7 @@ return { setup: setup, render: render, manifest: manifest };
   var bands = Array.prototype.slice.call(document.querySelectorAll('.tone-light, .tone-dark, .hero, .msi-hero, .cm-hero, .co-hero'));
   if (!bands.length) return;
   var rail = document.querySelector('.rail');
-  var parts = Array.prototype.slice.call(document.querySelectorAll('.wordmark, .index, .demo'));
+  var parts = Array.prototype.slice.call(document.querySelectorAll('.wordmark, .index-links a, .demo')); // each link switches on its own (Agentation note)
   function lightAt(y) {
     for (var i = 0; i < bands.length; i++) {
       var r = bands[i].getBoundingClientRect();
