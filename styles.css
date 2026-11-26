@@ -630,7 +630,7 @@ main { border-left: 0; }
   color: var(--ink); background: transparent; box-shadow: -1px 0 0 0 var(--rule);
 }
 /* Dark islands inside light bands (photo cards, black panels) get the dark tokens back */
-.tone-light .way, .tone-light .stage, .tone-light .emi-panel, .tone-light .msi-improve-aside, .tone-light .co-vision-art {
+.tone-light .way, .tone-light .emi-panel, .tone-light .co-vision-art {
   --ink: #fff; --ink-soft: rgba(255,255,255,.6); --ink-mute: rgba(255,255,255,.5); --ink-faint: rgba(255,255,255,.35); --ink-dim: rgba(255,255,255,.4);
   --signal-ink: #96dddc; color: var(--ink);
 }
@@ -665,8 +665,6 @@ main { border-left: 0; }
 .tone-light .cm-item--tile img { background: #000; }
 .tone-light .acc-item.is-open .acc-panel p { opacity: .75; }
 
-/* "Never finished": text on paper, the loop graphic keeps a black cell (like Company's vision row) */
-.msi-improve .msi-improve-aside { background: #000; }
 
 /* Grain behind the dark 3-up rows (Care Management programs, MSI model training), as in the reference */
 .cm-block, .msi-training { position: relative; }
@@ -676,3 +674,34 @@ main { border-left: 0; }
    when the image is narrower than the cell. Shade the image itself instead. */
 .tone-light .cm-challenge-photo::after { display: none; }
 .tone-light .cm-challenge-photo img { filter: brightness(.8); }
+
+/* "Never finished" loop graphic in light mode: whites and greys; yellow and teal beads darkened for contrast (Agentation note) */
+.tone-light .lp {
+  --teal: #2f7f7d; --lp-bg: #fefdfa; --line-art: #212121;
+  color: #212121;
+}
+.tone-light .lp-line { stroke: #b5b5b5; }
+.tone-light .lp-line--learn { stroke: rgba(47,127,125,.45); }
+.tone-light .lp-lane { stroke: #d6d6d4; }
+.tone-light .lp-lane--learn { stroke: rgba(47,127,125,.3); }
+.tone-light .lp-head { stroke: #b5b5b5; }
+.tone-light .lp-node { stroke: #8a8a8a; }
+.tone-light .lp-gate { stroke: #212121; }
+.tone-light .lp-bead { fill: #b8860b; }
+.tone-light .lp-bead--learn { fill: var(--teal); }
+.tone-light .lp-pill { background: #fff; border-color: #dcdcda; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+.tone-light .lp-pill__icon { background: #f4f4f2; border-color: #e4e4e2; }
+.tone-light .lp-pill__icon img { filter: invert(1); }
+.tone-light .lp-pill__icon svg path { stroke: #212121; }
+.tone-light .lp-pill__text small { color: rgba(0,0,0,.5); }
+.tone-light .lp-tag { color: rgba(0,0,0,.6); }
+.tone-light .lp-tag--r { color: var(--teal); }
+.tone-light .lp-tag--bar { color: #212121; }
+.tone-light .lp-tag--bar span { color: rgba(0,0,0,.55); }
+.tone-light .lp-lanelabel--l { color: rgba(0,0,0,.45); }
+
+/* "You stay in control" stage in light mode: white panel, grey grain (control-light shader), pale slabs (Agentation note) */
+.tone-light .stage { --panel: #fff; --panel-line: #d9d9d7; --slab: #fbfbfa; --slab-line: #8f8f8d; --bone: #3a3a3a; }
+
+/* MSI evidence: the tab underline runs the full width of its column (Agentation note) */
+.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); }

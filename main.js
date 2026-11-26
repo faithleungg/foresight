@@ -861,9 +861,12 @@ return { setup: setup, render: render, manifest: manifest };
 (function () {
   var PARAMS = {
     emi: { background: { r: 0, g: 0, b: 0, a: 1 }, zoom: 1, subjectX: 0, composition: 0, lightAngle: 160, vignette: 0.550000011920929, tone: 0.03999999910593033, grain: 1.600000023841858, accent: { r: 0.550000011920929, g: 0.949999988079071, b: 0.7200000286102295, a: 1 }, waveScale: 1, showAccent: false, cameraHeight: 1, ink: { r: 1, g: 1, b: 1, a: 1 }, lightHeight: 14, contrast: 1.2999999523162842, waveHeight: 1, seed: 7 },
+    'control-light': null, // filled below: the control params with a white ground and grey grain (Hybrid)
     paper: { grain: 0.5, scale: 1, intensity: 1, shadow: { r: 0.8700000047683716, g: 0.8640000224113464, b: 0.8519999980926514, a: 1 }, paper: { r: 0.9959999918937683, g: 0.9919999837875366, b: 0.9800000190734863, a: 1 }, speed: 1 },
     control: { background: { r: 0, g: 0, b: 0, a: 1 }, zoom: 1, subjectX: 0, composition: 0, lightAngle: 160, vignette: 0.550000011920929, tone: 0.03999999910593033, roundness: 0.6000000238418579, grain: 1.600000023841858, accent: { r: 0.550000011920929, g: 0.949999988079071, b: 0.7200000286102295, a: 1 }, waveScale: 1, showAccent: false, cameraHeight: 1, ink: { r: 1, g: 1, b: 1, a: 1 } /* white, to match the diagram panel (Agentation note; Figma had mint) */, lightHeight: 14, contrast: 1.2999999523162842, waveHeight: 1, seed: 7 }
   };
+  PARAMS['control-light'] = Object.assign({}, PARAMS.control, { background: { r: 1, g: 1, b: 1, a: 1 }, ink: { r: 0.62, g: 0.62, b: 0.6, a: 1 } });
+  window.FS_SHADERS['control-light'] = window.FS_SHADERS.control;
   function rgb(name, fallback) {
     var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim().split(/\s+/).map(Number);
     return v.length === 3 && v.every(Number.isFinite) ? { r: v[0] / 255, g: v[1] / 255, b: v[2] / 255, a: 1 } : fallback;
@@ -871,7 +874,7 @@ return { setup: setup, render: render, manifest: manifest };
   async function start() {
     if (!navigator.gpu) return;
     Object.keys(PARAMS).forEach(function (k) {
-      if (k === 'paper') return;
+      if (k === 'paper' || k === 'control-light') return;
       PARAMS[k].background = rgb('--shader-bg', PARAMS[k].background);
       PARAMS[k].ink = rgb('--shader-ink', PARAMS[k].ink);
     });
