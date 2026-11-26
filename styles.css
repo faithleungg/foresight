@@ -682,7 +682,7 @@ main { border-left: 0; }
 }
 .tone-light .lp-line { stroke: #b5b5b5; }
 .tone-light .lp-line--learn { stroke: rgba(47,127,125,.45); }
-.tone-light .lp-lane { stroke: #d6d6d4; }
+.tone-light .lp-lane { stroke: #b5b5b5; } /* same grey as the loop lines (Agentation note) */
 .tone-light .lp-lane--learn { stroke: rgba(47,127,125,.3); }
 .tone-light .lp-head { stroke: #b5b5b5; }
 .tone-light .lp-node { stroke: #8a8a8a; }
@@ -699,6 +699,13 @@ main { border-left: 0; }
 .tone-light .lp-tag--bar { color: #212121; }
 .tone-light .lp-tag--bar span { color: rgba(0,0,0,.55); }
 .tone-light .lp-lanelabel--l { color: rgba(0,0,0,.45); }
+/* Lane labels: outlined instead of a paper-coloured fill (Agentation note) */
+.tone-light .lp-lanelabel { background: none; padding: 8px 3px; border: 1px solid #b5b5b5; border-radius: 3px; }
+.tone-light .lp-lanelabel--r { border-color: rgba(47,127,125,.45); }
+/* With no fill the lanes would run through the labels, so the lanes break where the labels sit (user units) */
+.tone-light .lp-lane { vector-effect: none; stroke-width: 1.2; }
+.tone-light .lp-lane:not(.lp-lane--learn) { stroke-dasharray: 92 104 200; }
+.tone-light .lp-lane--learn { stroke-dasharray: 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 109 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4 3 4; }
 
 /* "You stay in control" stage in light mode: white panel, grey grain (control-light shader), pale slabs (Agentation note) */
 .tone-light .stage { --panel: #fff; --panel-line: #d9d9d7; --slab: #fbfbfa; --slab-line: #8f8f8d; --bone: #3a3a3a; }
