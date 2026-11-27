@@ -651,3 +651,8 @@ main {
 }
 /* Dark: no white rail line over the home video (Agentation note) */
 .hero--video::after { display: none; }
+
+/* Home video: "Foresight" set in the bottom-left of the video column, same size as the page titles (Agentation note) */
+.hero-title { position: absolute; z-index: 2; left: calc(var(--rail) + var(--gutter)); bottom: 40px; margin: 0;
+  font-family: var(--serif); font-weight: 400; font-size: 80px; line-height: 1; letter-spacing: -0.8px; color: #fff; }
+@media (max-width: 900px) { .hero-title { left: 16px; bottom: 32px; font-size: 44px; line-height: 1.05; } }
