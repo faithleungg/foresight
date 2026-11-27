@@ -1,9 +1,9 @@
-/* Preview switch (not part of the site): floating Dark / Hybrid / Light toggle.
-   Each version lives in its own folder (dark/, hybrid/, light/); this jumps to the same page and
+/* Preview switch (not part of the site): floating Dark / Hybrid / Light / Gradient toggle.
+   Each version lives in its own folder (dark/, hybrid/, light/, gradient/); this jumps to the same page and
    scroll position in another version. Works from any base path (e.g. GitHub Pages /<repo>/). */
 (function () {
-  var VERSIONS = ['dark', 'hybrid', 'light'];
-  var m = location.pathname.match(/^(.*\/)(dark|hybrid|light)\/(.*)$/);
+  var VERSIONS = ['dark', 'hybrid', 'light', 'gradient'];
+  var m = location.pathname.match(/^(.*\/)(dark|hybrid|light|gradient)\/(.*)$/);
   if (!m) return;
   var base = m[1], cur = m[2], rest = m[3];
 
