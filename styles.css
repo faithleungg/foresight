@@ -616,3 +616,9 @@ main {
 .msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
 .msi-evidence-inner > .msi-tabs-wrap .msi-tab { justify-content: flex-start; }
 .msi-evidence-inner > .msi-tabs-wrap { padding-top: 32px; }
+
+/* Estimate chart: as tall as the text column beside it (heading to button), width follows (Agentation note) */
+@media (min-width: 901px) {
+  .cm-cta { align-items: stretch; }
+  .cm-cta-chart { flex: none; align-self: stretch; height: auto; width: auto; max-width: 50%; aspect-ratio: 406 / 248; object-fit: contain; object-position: right bottom; }
+}
