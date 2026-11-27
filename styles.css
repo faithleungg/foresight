@@ -622,3 +622,6 @@ main {
   .cm-cta { align-items: stretch; }
   .cm-cta-chart { flex: none; align-self: stretch; height: auto; width: auto; max-width: 50%; aspect-ratio: 406 / 248; object-fit: contain; object-position: right bottom; }
 }
+
+/* Footer column labels (NAVIGATION, COMPANY) at 14px (Agentation note) */
+.foot-nav h4 { font-size: 14px; line-height: 18px; letter-spacing: .56px; }
