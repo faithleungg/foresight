@@ -649,3 +649,5 @@ main {
   .hero-video { left: var(--rail); width: calc(100% - var(--rail)); }
   .hero--video::before { display: none; }
 }
+/* Dark: no white rail line over the home video (Agentation note) */
+.hero--video::after { display: none; }
