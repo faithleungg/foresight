@@ -1,0 +1,10 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="activity-heart" clip-path="url(#clip0_0_7)">
+<path id="Icon" d="M16.0359 12.1555H14.959L13.3437 15.3861L11.19 8.92494L9.57468 12.1555H8.49781M12.2595 5.30216C10.1064 2.78508 6.5161 2.10799 3.8185 4.41288C1.12089 6.71778 0.741104 10.5715 2.85955 13.2975C4.45966 15.3565 9.00533 19.49 11.134 21.3896C11.5253 21.7387 11.721 21.9133 11.9501 21.9821C12.149 22.0417 12.37 22.0417 12.5689 21.9821C12.798 21.9133 12.9936 21.7387 13.385 21.3896C15.5136 19.49 20.0593 15.3565 21.6594 13.2975C23.7778 10.5715 23.4444 6.69353 20.7005 4.41288C17.9565 2.13223 14.4125 2.78508 12.2595 5.30216Z" stroke-width="2.25066" stroke-linecap="round" stroke-linejoin="round" stroke="#476B6A"/>
+</g>
+<defs>
+<clipPath id="clip0_0_7">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
+</svg>
