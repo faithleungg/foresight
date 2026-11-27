@@ -638,3 +638,8 @@ main {
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: brightness(.82); pointer-events: none; }
 .hero--video::after { z-index: 1; }
 .hero--video::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: linear-gradient(to right, rgba(0,0,0,.5), rgba(0,0,0,.15) 30%, rgba(0,0,0,0) 55%); } /* keeps the rail text readable over bright frames */
+
+/* Models diagram: return lines match the outgoing ones (cards to return bus = 42.66px like the bus-to-card stems;
+   return bus to the outcomes pill = 37.1px like Foresight-1 to the bus) (Agentation note) */
+.row3 .cell > .vline { height: 42.66px; }
+.center > .vline { height: 37.1px; }
