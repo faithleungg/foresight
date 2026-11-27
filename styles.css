@@ -191,7 +191,7 @@ main {
 .bus .ln.m { background: rgba(var(--signal-rgb),.5); }
 .bus .corner { width: 29.68px; height: 29.68px; flex: none; }
 .bus .half { flex: 1 1 0; display: flex; align-items: center; }
-.bus .sig { width: 5.57px; height: 5.57px; flex: none; background: linear-gradient(var(--wire), var(--wire)) center / 100% .927px no-repeat; } /* static dots removed, wire drawn through (Agentation notes) */
+.bus .sig { width: 5.57px; height: .927px; flex: none; background: var(--wire); } /* static dots removed; drawn exactly like the neighbouring wire so it sits on the same pixel row (Agentation notes) */
 .bus .sig svg { display: none; }
 .stem-b { width: 7.42px; height: 42.66px; }
 .vline { width: .927px; height: 22.26px; background: rgba(var(--signal-rgb),.5); }
