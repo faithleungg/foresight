@@ -759,3 +759,10 @@ main { border-left: 0; }
    return bus to the outcomes pill = 37.1px like Foresight-1 to the bus) (Agentation note) */
 .row3 .cell > .vline { height: 42.66px; }
 .center > .vline { height: 37.1px; }
+
+/* Home video: "Foresight" in Portrait at the bottom-left of the video column, same size as the page titles;
+   its bottom lines up with "Book a demo" (40px above the viewport bottom), so the video fills the screen (Agentation notes) */
+.hero-title { position: absolute; z-index: 2; left: calc(var(--rail) + var(--gutter)); bottom: calc(40px + env(safe-area-inset-bottom, 0px)); margin: 0;
+  font-family: var(--serif); font-weight: 400; font-size: 80px; line-height: 1; letter-spacing: -0.8px; color: #fff; }
+@media (min-width: 901px) { .hero--video { height: 100vh; max-height: none; } }
+@media (max-width: 900px) { .hero-title { left: 16px; bottom: 32px; font-size: 44px; line-height: 1.05; } }
