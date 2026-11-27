@@ -17,7 +17,7 @@
   <rect x="268" y="112" width="52" height="178" fill="white" fill-opacity=".03"/>
   <rect x="268" y="112" width="52" height="178" fill="url(#hatch)"/>
   <path d="M268 290V112H320V290" stroke="white" stroke-opacity=".7" stroke-width="1.2" stroke-linejoin="miter"/>
-  <rect x="344" y="44" width="52" height="246" fill="url(#mint)"/>
+  <rect x="344" y="44" width="52" height="246" fill="#96DDDC" fill-opacity=".1"/>
   <rect x="344" y="44" width="52" height="246" fill="url(#hatch-mint)"/>
   <path d="M344 290V44H396V290" stroke="#96DDDC" stroke-width="1.2" stroke-linejoin="miter"/>
   <path d="M16 290H420" stroke="white" stroke-opacity=".35"/>
