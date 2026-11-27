@@ -656,3 +656,9 @@ main {
 .hero-title { position: absolute; z-index: 2; left: calc(var(--rail) + var(--gutter)); bottom: 40px; margin: 0;
   font-family: var(--serif); font-weight: 400; font-size: 80px; line-height: 1; letter-spacing: -0.8px; color: #fff; }
 @media (max-width: 900px) { .hero-title { left: 16px; bottom: 32px; font-size: 44px; line-height: 1.05; } }
+/* "Foresight" bottom lines up with the bottom of "Book a demo": the rail button sits 40px above the
+   viewport bottom, so the home video fills the screen and the title sits 40px up too (Agentation note) */
+@media (min-width: 901px) {
+  .hero--video { height: 100vh; max-height: none; }
+  .hero-title { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+}
