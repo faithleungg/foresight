@@ -1029,7 +1029,7 @@ return { setup: setup, render: render, manifest: manifest };
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduce) return;
   var NS = 'http://www.w3.org/2000/svg';
-  var FWD = 7000, REST = 1000, BACK = 7000, TRAIN = 2, GAP = 0.06; // two beads per route, the second trailing the first (Agentation notes)
+  var FWD = 7000, REST = 1000, BACK = 7000, TRAIN = 2, GAP = 0.03; // two equal beads per route, close together (Agentation notes)
   var CYCLE = FWD + REST + BACK + REST;
 
   // Polyline with rounded corners (radius r), as SVG path data.
@@ -1081,7 +1081,7 @@ return { setup: setup, render: render, manifest: manifest };
         paths.push({ el: path, len: len });
         for (var k = 0; k < TRAIN; k++) {
           var c = document.createElementNS(NS, 'circle');
-          c.setAttribute('r', k === 0 ? 2.6 : 2.1);
+          c.setAttribute('r', 2.6); // both beads the same size (Agentation note)
           c.setAttribute('class', 'emi-bead');
           svg.appendChild(c);
           beads.push({ c: c, p: i, k: k });
@@ -1105,7 +1105,7 @@ return { setup: setup, render: render, manifest: manifest };
         var P = paths[bd.p], at = (back ? 1 - e : e) * P.len;
         var pt = P.el.getPointAtLength(at);
         bd.c.setAttribute('cx', pt.x); bd.c.setAttribute('cy', pt.y);
-        bd.c.style.opacity = (1 - bd.k * .3) * Math.min(1, u * 12, (1 - u) * 12);
+        bd.c.style.opacity = (1 - bd.k * .15) * Math.min(1, u * 12, (1 - u) * 12);
       });
       raf = requestAnimationFrame(frame);
     }

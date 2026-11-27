@@ -221,7 +221,7 @@ main {
   display: flex; align-items: center;
   padding: 64px var(--gutter);
 }
-.control-grid { display: flex; gap: 20px; width: 100%; height: min(628px, calc(100vh - 128px)); min-height: 512px; }
+.control-grid { display: flex; gap: 40px; width: 100%; height: min(628px, calc(100vh - 128px)); min-height: 512px; }
 .control-left { width: 367px; flex: none; align-self: center; display: flex; flex-direction: column; gap: 64px; }
 .control-left .h-control { font-family: var(--serif); font-weight: 400; font-size: 48px; line-height: 1.2; letter-spacing: -0.48px; }
 .control-left .lede { margin-top: 24px; }
@@ -348,7 +348,7 @@ main {
 .msi-intro-text { display: flex; flex-direction: column; gap: 24px; max-width: 916px; }
 .msi-intro-text .eyebrow { margin-bottom: 8px; font-size: 16px; letter-spacing: .64px; }
 .msi-intro .eyebrow, .msi-head .eyebrow, .msi-improve-text .eyebrow { color: var(--ink-soft); text-transform: uppercase; }
-.msi-evidence .msi-head .eyebrow { font-size: 16px; letter-spacing: .64px; } /* 16px (Agentation note) */
+.msi-evidence .msi-head .eyebrow { font-size: 14px; letter-spacing: .56px; } /* 14px (Agentation note) */
 .msi-training .msi-head .eyebrow, .msi-improve-text .eyebrow { font-size: 14px; letter-spacing: .56px; } /* 14px (Agentation notes) */
 .msi-title { font-family: var(--serif); font-weight: 400; font-size: 80px; line-height: 1; letter-spacing: -0.8px; }
 .msi-lede { font-size: 24px; line-height: 1.5; letter-spacing: -0.6px; }
@@ -393,7 +393,7 @@ main {
 .msi-head--narrow { max-width: 552px; }
 .msi-methods { display: flex; gap: 24px; }
 .msi-method { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
-.msi-method-icon { display: block; width: 40px; height: 40px; margin-bottom: 24px; } /* 40px (Agentation note) */
+.msi-method-icon { display: block; width: 44px; height: 44px; margin-bottom: 24px; } /* 44px (Agentation note) */
 .msi-method h3 { margin: 0 0 12px; font-weight: 400; font-size: 20px; line-height: 1.5; }
 .msi-method p { font-size: 18px; line-height: 1.5; color: var(--ink-soft); }
 
@@ -662,7 +662,7 @@ main { border-left: 0; }
 .cm-ico img[src$="staffing-light.svg"], .cm-ico img[src$="fast-light.svg"], .cm-ico img[src$="cost-light.svg"] { width: 40px; height: 40px; }
 .cm-ico:has(img[src$="staffing-light.svg"]), .cm-ico:has(img[src$="fast-light.svg"]), .cm-ico:has(img[src$="cost-light.svg"]) { background: none; }
 .cm-ico img[src$="support-light.svg"] { width: 19.3px; height: 19.3px; }
-.tone-light .cm-item--tile img { background: #000; }
+.tone-light .cm-item--tile img { background: #000; border-bottom: 1px solid #454545; } /* thin stroke so the bottom card doesn't melt into the paper (Agentation note) */
 .tone-light .acc-item.is-open .acc-panel p { opacity: .75; }
 
 
@@ -715,7 +715,8 @@ main { border-left: 0; }
 .tone-light .stage > canvas { mix-blend-mode: multiply; opacity: .45; }
 
 /* MSI evidence: the tab underline runs the full width of its column (Agentation note) */
-.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 24px; } /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
+.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
+.msi-evidence-inner > .msi-tabs-wrap .msi-tab { justify-content: flex-start; } /* Patients icon lines up with the text below (Agentation note) */ /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
 .msi-evidence-inner > .msi-tabs-wrap { padding-top: 32px; } /* 32px (Agentation note) */
 
 /* Estimate chart: as tall as the text column beside it (heading to button), width follows (Agentation note) */
