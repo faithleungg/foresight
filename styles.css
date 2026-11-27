@@ -643,3 +643,9 @@ main {
    return bus to the outcomes pill = 37.1px like Foresight-1 to the bus) (Agentation note) */
 .row3 .cell > .vline { height: 42.66px; }
 .center > .vline { height: 37.1px; }
+/* Dark: the home video starts at the rail line; the rail column stays black like the sub-pages (Agentation note) */
+@media (min-width: 901px) {
+  .hero--video { background: #000; }
+  .hero-video { left: var(--rail); width: calc(100% - var(--rail)); }
+  .hero--video::before { display: none; }
+}
