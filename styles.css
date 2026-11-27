@@ -738,3 +738,6 @@ main { border-left: 0; }
   mask-composite: intersect;
 }
 @media (max-width: 900px) { .co-vision-art::before { -webkit-mask-size: cover, 100% 100%; mask-size: cover, 100% 100%; -webkit-mask-position: center bottom, 0 0; mask-position: center bottom, 0 0; } }
+
+/* Footer column labels (NAVIGATION, COMPANY) at 14px (Agentation note) */
+.foot-nav h4 { font-size: 14px; line-height: 18px; letter-spacing: .56px; }
