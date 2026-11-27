@@ -629,6 +629,7 @@ main {
 /* Company vision art is a live glyph field (vision.js): the static image/mask layers hide once the canvas is running */
 .co-vision-art.is-live { background-image: none; }
 .co-vision-art.is-live::before, .co-vision-art.is-live::after { display: none; }
+.co-vision-art.is-live { position: relative; overflow: hidden; } /* anchor the canvas to the panel */
 .co-vision-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 .co-vision-art { --glyph: #fff; }
 
