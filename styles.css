@@ -662,3 +662,11 @@ main {
   .hero--video { height: 100vh; max-height: none; }
   .hero-title { bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
 }
+
+/* Models diagram: straight vertical wires drawn as one kind of 1px line, all centred the same way, so the
+   run from Foresight-1 down (stem, junction, stem into the cards) and the return lines don't step (Agentation note) */
+.emi-inner .stem-a { background: linear-gradient(var(--wire), var(--wire)) center top / 1px 100% no-repeat; }
+.emi-inner .stem-a svg { visibility: hidden; }
+.emi-inner .stem-b { background: linear-gradient(var(--wire), var(--wire)) center top / 1px calc(100% - 5.6px) no-repeat; }
+.emi-inner .stem-b rect { display: none; }  /* keep only the arrowhead from the SVG */
+.emi-inner .vline { width: 1px; }
