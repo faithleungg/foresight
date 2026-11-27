@@ -174,7 +174,7 @@ main {
 .emi-head { display: flex; flex-direction: column; gap: 16px; }
 .emi-head p:last-child { font-size: 18px; }
 .emi-panel { position: relative; margin-top: 32px; border: 1px solid var(--panel-line); border-radius: 4px; overflow: hidden; background: var(--panel); padding: 60.44px; }
-.emi-panel > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .45; mix-blend-mode: multiply; } /* grey grain multiplied over the paper */
+.emi-panel > canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .25; mix-blend-mode: multiply; } /* lighter, like the data-layer panel (Agentation note) */ /* grey grain multiplied over the paper */
 .emi { position: relative; display: flex; flex-direction: column; overflow-x: auto; }
 /* Capped and centred so the cards don't stretch on wide panels (Agentation note). */
 .emi-inner { min-width: 680px; width: 100%; max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; }
@@ -226,7 +226,7 @@ main {
   display: flex; align-items: center;
   padding: 64px var(--gutter);
 }
-.control-grid { display: flex; gap: 20px; width: 100%; height: min(628px, calc(100vh - 128px)); min-height: 512px; }
+.control-grid { display: flex; gap: 40px; width: 100%; height: min(628px, calc(100vh - 128px)); min-height: 512px; }
 .control-left { width: 367px; flex: none; align-self: center; display: flex; flex-direction: column; gap: 64px; }
 .control-left .h-control { font-family: var(--serif); font-weight: 400; font-size: 48px; line-height: 1.2; letter-spacing: -0.48px; }
 .control-left .lede { margin-top: 24px; }
@@ -353,7 +353,7 @@ main {
 .msi-intro-text { display: flex; flex-direction: column; gap: 24px; max-width: 916px; }
 .msi-intro-text .eyebrow { margin-bottom: 8px; font-size: 16px; letter-spacing: .64px; }
 .msi-intro .eyebrow, .msi-head .eyebrow, .msi-improve-text .eyebrow { color: var(--ink-soft); text-transform: uppercase; }
-.msi-evidence .msi-head .eyebrow { font-size: 16px; letter-spacing: .64px; } /* 16px (Agentation note) */
+.msi-evidence .msi-head .eyebrow { font-size: 14px; letter-spacing: .56px; } /* 14px (Agentation note) */
 .msi-training .msi-head .eyebrow, .msi-improve-text .eyebrow { font-size: 14px; letter-spacing: .56px; } /* 14px (Agentation notes) */
 .msi-title { font-family: var(--serif); font-weight: 400; font-size: 80px; line-height: 1; letter-spacing: -0.8px; }
 .msi-lede { font-size: 24px; line-height: 1.5; letter-spacing: -0.6px; }
@@ -398,7 +398,7 @@ main {
 .msi-head--narrow { max-width: 552px; }
 .msi-methods { display: flex; gap: 24px; }
 .msi-method { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
-.msi-method-icon { display: block; width: 40px; height: 40px; margin-bottom: 24px; } /* 40px (Agentation note) */
+.msi-method-icon { display: block; width: 44px; height: 44px; margin-bottom: 24px; } /* 44px (Agentation note) */
 .msi-method h3 { margin: 0 0 12px; font-weight: 400; font-size: 20px; line-height: 1.5; }
 .msi-method p { font-size: 18px; line-height: 1.5; color: var(--ink-soft); }
 
@@ -535,7 +535,7 @@ main {
 .cm-item h3 { margin: 0 0 -12px; font-weight: 400; font-size: 22px; line-height: 1.5; }
 .cm-item p { font-size: 18px; line-height: 1.5; color: rgba(0,0,0,.6); }
 .cm-item--tile { gap: 24px; }
-.cm-item--tile img { display: block; width: 100%; height: auto; aspect-ratio: 344 / 340; object-fit: cover; border-radius: 4px; background: #efefef; }
+.cm-item--tile img { display: block; width: 100%; height: auto; aspect-ratio: 344 / 340; object-fit: cover; border-radius: 4px; background: #f2ede3; /* warm beige (Agentation note) */ }
 .cm-item--tile h3 { margin-bottom: -16px; }
 .cm-item--tile p, .cm-grid--boxed .cm-item p { color: var(--ink-soft); }
 .cm-grid--boxed { gap: 0; }
@@ -672,17 +672,17 @@ main { border-left: 0; }
 /* The challenge photo's 20% shade was drawn over the whole cell; on paper that shows as a grey box
    when the image is narrower than the cell. Shade the image itself instead. */
 .tone-light .cm-challenge-photo::after { display: none; }
-.tone-light .cm-challenge-photo img { filter: brightness(.8); }
+.tone-light .cm-challenge-photo img { filter: brightness(1.06); } /* a touch brighter on paper (Agentation note) */
 
 /* "Never finished" loop graphic in light mode: whites and greys; yellow and teal beads darkened for contrast (Agentation note) */
 .tone-light .lp {
-  --teal: #2f7f7d; --lp-bg: #fefdfa; --line-art: #212121;
+  --teal: #14a8a3; --lp-bg: #fefdfa; --line-art: #212121; /* brighter, more electric teal (Agentation note) */
   color: #212121;
 }
 .tone-light .lp-line { stroke: #b5b5b5; }
-.tone-light .lp-line--learn { stroke: rgba(47,127,125,.45); }
+.tone-light .lp-line--learn { stroke: rgba(20,168,163,.45); }
 .tone-light .lp-lane { stroke: #b5b5b5; } /* same grey as the loop lines (Agentation note) */
-.tone-light .lp-lane--learn { stroke: rgba(47,127,125,.3); }
+.tone-light .lp-lane--learn { stroke: rgba(20,168,163,.3); }
 .tone-light .lp-head { stroke: #b5b5b5; fill: #b5b5b5; stroke-linejoin: round; } /* filled triangles (Agentation note) */
 .tone-light .lp-head--learn { stroke: var(--teal); fill: var(--teal); }
 .tone-light .lp-node { stroke: #8a8a8a; }
@@ -701,7 +701,7 @@ main { border-left: 0; }
 .tone-light .lp-lanelabel--l { color: rgba(0,0,0,.45); }
 /* Lane labels: outlined instead of a paper-coloured fill (Agentation note) */
 .tone-light .lp-lanelabel { background: none; padding: 8px 3px; border: 1px solid #b5b5b5; border-radius: 3px; }
-.tone-light .lp-lanelabel--r { border-color: rgba(47,127,125,.45); }
+.tone-light .lp-lanelabel--r { border-color: rgba(20,168,163,.45); }
 /* With no fill the lanes would run through the labels, so the lanes break where the labels sit (user units) */
 .tone-light .lp-lane { vector-effect: none; stroke-width: 1.2; }
 .tone-light .lp-lane:not(.lp-lane--learn) { stroke-dasharray: 92 104 200; }
@@ -711,7 +711,8 @@ main { border-left: 0; }
 .stage > canvas { mix-blend-mode: multiply; opacity: .45; }
 
 /* MSI evidence: the tab underline runs the full width of its column (Agentation note) */
-.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 24px; } /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
+.msi-evidence-inner > .msi-tabs-wrap .msi-tabs { margin: 0 calc(-1 * var(--gutter)); padding: 0 var(--gutter); }
+.msi-evidence-inner > .msi-tabs-wrap .msi-tab { justify-content: flex-start; } /* Patients icon lines up with the text below (Agentation note) */ /* line runs edge to edge; tabs inset 24px so "Medical Knowledge" isn't at the edge (Agentation notes) */
 .msi-evidence-inner > .msi-tabs-wrap { padding-top: 32px; } /* 32px (Agentation note) */
 
 /* Estimate chart: as tall as the text column beside it (heading to button), width follows (Agentation note) */
@@ -733,8 +734,8 @@ main { border-left: 0; }
   -webkit-mask-image: url("assets/company/vision.png"); mask-image: url("assets/company/vision.png");
   -webkit-mask-size: 150% auto; mask-size: 150% auto; -webkit-mask-position: left bottom; mask-position: left bottom;
 }
-.co-vision-art::before {
-  z-index: 1; background: var(--teal);
+.co-vision-art::before { /* the cursor erases the pattern back to the paper (Agentation note) */
+  z-index: 1; background: #fefdfa;
   -webkit-mask-image: url("assets/company/vision.png"), radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,.6) 45%, transparent 100%);
   -webkit-mask-size: 150% auto, 100% 100%; -webkit-mask-position: left bottom, 0 0;
   -webkit-mask-composite: source-in;
