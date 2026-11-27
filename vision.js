@@ -12,7 +12,7 @@
   var SRC = 'assets/company/vision.png';
   var CELL = 9;                         // px between glyph centres (matches the original pitch)
   var RAMP = '.:-+o0O8$@';              // light to dense
-  var RADIUS = 120, PUSH = 26;          // cursor reach and push distance (px)
+  var RADIUS = 95, PUSH = 9;            // cursor reach and push distance (px): a gentle part, not a bulge (Agentation note)
 
   var canvas = document.createElement('canvas');
   canvas.className = 'co-vision-canvas';
@@ -97,7 +97,7 @@
           var f = 1 - d / RADIUS; f = f * f * (3 - 2 * f);           // smooth falloff
           var n = d > 0.001 ? 1 / d : 0;
           tx += dx * n * PUSH * f; ty += dy * n * PUSH * f;           // pushed outward
-          tk = 1 - 0.55 * f;                                         // and shrunk near the cursor
+          tk = 1 - 0.3 * f;                                          // and slightly shrunk near the cursor
         }
       }
       // spring toward the target, damped
