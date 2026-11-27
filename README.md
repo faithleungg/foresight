@@ -6,16 +6,16 @@ Static marketing site for Foresight, the healthcare neolab building medical supe
 
 | Page | File | What's on it |
 | --- | --- | --- |
-| Home | `index.html` | Hero placeholder, intro statement, "Two ways" cards linking to the two product pages, models diagram, "You stay in control" |
+| Home | `index.html` | Full-screen looping hero video, intro statement, "Two ways" cards linking to the two product pages, models diagram, "You stay in control" |
 | Medical Superintelligence | `medical-superintelligence.html` | Photo hero, clinical evidence tabs, model training methods, models diagram, "Never finished" loop graphic |
 | Care Management | `care-management.html` | Photo hero, the challenge, three programs, "We run the program" tiles, why partner, revenue call to action with estimate chart |
 | Company | `company.html` | Photo hero, founder letter, vision |
 
 The designs come from the Figma file "Web Revamp" (section "Wednesday", node 244:14233). Each page is a labelled frame in that section.
 
-## Hybrid branch
+## Hybrid look
 
-This branch tests light paper bands alternating with black bands (Figma 258:16154). The paper is the animated "Foresight BG · Dappled" shader on one fixed canvas behind each page. Sections opt in with `tone-light` or `tone-dark`. The rail switches between light and dark ink as it passes over each band. All of the theme's CSS sits in the "HYBRID" block at the end of `styles.css`.
+The site uses the Hybrid look: light paper bands alternating with black bands (Figma 258:16154). The paper is the animated "Foresight BG · Dappled" shader on one fixed canvas behind each page. Sections opt in with `tone-light` or `tone-dark`. The rail switches between light and dark ink as it passes over each band. All of the theme's CSS sits in the "HYBRID" block at the end of `styles.css`.
 
 ## Structure
 
@@ -29,8 +29,9 @@ main.js                          Shared scripts: WebGPU grain shaders and shader
                                  "You stay in control" scroll interaction, models-diagram bead animation
 msi.js                           Medical Superintelligence only: evidence tabs, loop graphic
 assets/
+  hero.mp4, hero-poster.jpg      Home hero video (1080p, muted loop) and its poster frame
   card-cm.jpg                    Corridor photo (Care Management card and hero)
-  msi/                           Medical Superintelligence hero, tab icons, Mayo Clinic logo, diagram icon
+  msi/                           Medical Superintelligence hero, tab icons, diagram icon
   cm/                            Care Management photo, program and benefit icons, "We run the program" tiles
   company/                       Company hero and vision graphic
   icons/                         Model training icons
@@ -68,8 +69,7 @@ Any static host works.
 - Care Management: real phone number for "Call us" and a booking link for "Book a call" (both are placeholders).
 - Medical Superintelligence: the Physicians and Medical Knowledge tab descriptions are filler copy.
 - Care Management: the challenge copy repeats itself, and the Remote Patient Monitoring description is reused from the Hindsight Distillation method. Both are as in Figma.
-- Home: the hero is a grey placeholder until its content is designed.
 - Footer: "Join Us" and "Contact" aren't links yet.
 - Social metadata: add `og:url` and an absolute `og:image` to each page after deploying.
 - The grain renders only in browsers that support WebGPU.
-- `assets/hero.jpg` is no longer used (the home hero is a placeholder).
+- `assets/hero.jpg` and `assets/msi/mayo-logo.png` are no longer used.
